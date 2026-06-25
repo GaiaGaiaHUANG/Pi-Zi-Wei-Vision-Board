@@ -328,11 +328,8 @@
         <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:18px;">Get in touch</div>
         <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(17px,2.2vw,21px);line-height:1.6;color:#2A2620;text-align:left;">The possibilities within the intersection of &pi; and Zi Wei are endless. I am actively evolving this vision board, expanding its features to better serve the overarching concept of self-reflection and improvement. Your advice and feedback would be invaluable to me as I develop this further. Thank you for your time and your giving.</p>
       </div>
-      <form id="vb-contact-form" style="display:flex;flex-direction:column;gap:22px;">
-        <input type="hidden" name="access_key" value="edd35fc4-794d-47b6-9486-33ba3c2e34fa">
-        <input type="hidden" name="subject" value="New message from pi-ziwei.com">
-        <input type="hidden" name="from_name" value="Pi Zi Wei Vision Board">
-        <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+      <form id="vb-contact-form" action="https://formspree.io/f/mpqgqvbn" method="POST" style="display:flex;flex-direction:column;gap:22px;">
+        <input type="hidden" name="_subject" value="New message from pi-ziwei.com">
         <label style="display:flex;flex-direction:column;gap:8px;">
           <span style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#6E635A;">Name</span>
           <input type="text" name="name" style="border:none;border-bottom:1px solid #D9D0C2;background:transparent;outline:none;font-family:inherit;font-size:15px;color:#1C1C1C;padding:8px 2px;"/>
@@ -824,15 +821,15 @@ class Component extends DCLogic {
       e.preventDefault();
       const form=e.target; const btn=form.querySelector('button[type="submit"]'); const sentEl=this.$('vb-contact-sent');
       const fd=new FormData(form);
-      if(fd.get('botcheck')){ return; }
       const origLabel=btn.textContent; btn.disabled=true; btn.textContent='Sending\u2026';
       sentEl.style.color='#A97F1C'; sentEl.textContent='Thank you \u2014 received with gratitude.'; sentEl.style.display='none';
-      fetch('https://api.web3forms.com/submit',{ method:'POST', headers:{ 'Accept':'application/json' }, body:fd })
-        .then(r=>r.json())
-        .then(data=>{
+      fetch(form.action,{ method:'POST', headers:{ 'Accept':'application/json' }, body:fd })
+        .then(r=>{
           btn.disabled=false; btn.textContent=origLabel;
-          if(data.success){ sentEl.style.display='inline'; form.reset(); }
-          else { sentEl.style.color='#B5453A'; sentEl.textContent='Something went wrong \u2014 please email us directly.'; sentEl.style.display='inline'; }
+          if(r.ok){ sentEl.style.display='inline'; form.reset(); }
+          else {
+            sentEl.style.color='#B5453A'; sentEl.textContent='Something went wrong \u2014 please email us directly.'; sentEl.style.display='inline';
+          }
         })
         .catch(()=>{
           btn.disabled=false; btn.textContent=origLabel;
