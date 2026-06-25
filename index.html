@@ -17,7 +17,7 @@
     *{box-sizing:border-box;}
     html,body{margin:0;padding:0;height:100%;background:#F8F5F0;}
     #vb-name::placeholder,#vb-name-b::placeholder{color:#C9A96E;opacity:0.55;font-style:italic;}
-    #vb-mantra::placeholder{color:#9A8F82;opacity:0.6;font-style:italic;}
+    #vb-mantra::placeholder{color:#6E635A;opacity:0.6;font-style:italic;}
     #vb-amount::placeholder{color:#C8BFAE;}
     .vb-scroll::-webkit-scrollbar{width:8px;}
     .vb-scroll::-webkit-scrollbar-thumb{background:#E0D9CE;border-radius:4px;}
@@ -31,12 +31,12 @@
     #vb-print-doc{display:none;}
     .vb-print-opt:hover{background:#FBF6E9;}
     @media print{
-      @page{size:landscape;margin:0;}
+      @page{size:A3 landscape;margin:0;}
       html,body{height:auto !important;background:#fff !important;}
       #vb-root{height:auto !important;overflow:visible !important;background:#fff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
       #vb-root > header,#vb-home,#vb-overview,#vb-palace,#vb-contact,#vb-carry,#vb-howto,#vb-zwabout{display:none !important;}
       #vb-print-doc{display:block !important;}
-      .vb-print-page{width:297mm;height:210mm;page-break-after:always;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column;}
+      .vb-print-page{width:420mm;height:297mm;page-break-after:always;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column;}
       .vb-print-page:last-child{page-break-after:auto;}
     }
   </style>
@@ -45,23 +45,26 @@
 
   <header style="position:relative;z-index:30;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:0.5px solid #E0D9CE;background:rgba(248,245,240,0.92);backdrop-filter:blur(6px);">
     <div style="display:flex;align-items:center;gap:16px;">
-      <button id="vb-back" style="display:none;align-items:center;gap:6px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#9A8F82;cursor:pointer;background:none;border:none;font-family:inherit;">&larr; Board</button>
+      <button id="vb-back" style="display:none;align-items:center;gap:6px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6E635A;cursor:pointer;background:none;border:none;font-family:inherit;">&larr; Board</button>
       <div id="vb-logo" style="display:flex;align-items:center;gap:16px;cursor:pointer;">
         <span id="vb-logo-pi" style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:500;color:#C9A96E;line-height:0.8;">&pi;</span>
         <div style="display:flex;flex-direction:column;gap:2px;">
           <span style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;letter-spacing:1.5px;color:#1C1C1C;">Zi Wei Vision Board</span>
-          <span id="vb-sub" style="font-size:8.5px;letter-spacing:3.5px;color:#9A8F82;text-transform:uppercase;">Your infinite possibility</span>
+          <span id="vb-sub" style="font-size:8.5px;letter-spacing:3.5px;color:#6E635A;text-transform:uppercase;">Your infinite possibility</span>
         </div>
       </div>
     </div>
     <div style="display:flex;gap:22px;align-items:center;">
-      <span id="vb-enter-link" style="cursor:pointer;font-size:9px;letter-spacing:3px;color:#9A8F82;text-transform:uppercase;">Begin</span>
-      <div id="vb-board-controls" style="display:none;gap:20px;align-items:center;font-size:9px;letter-spacing:3px;color:#9A8F82;text-transform:uppercase;">
+      <span id="vb-enter-link" style="cursor:pointer;font-size:9px;letter-spacing:3px;color:#8A6A2F;text-transform:uppercase;">Begin</span>
+      <div id="vb-board-controls" style="display:none;gap:20px;align-items:center;font-size:9px;letter-spacing:3px;color:#6E635A;text-transform:uppercase;">
         <div id="vb-print-wrap" style="position:relative;">
           <span id="vb-print" style="cursor:pointer;color:#1C1C1C;">Print Board</span>
+          <div id="vb-print-menu" style="display:none;position:absolute;top:calc(100% + 12px);right:0;background:#fff;border:0.5px solid #E0D9CE;box-shadow:0 14px 38px rgba(28,28,28,0.18);min-width:168px;z-index:60;">
+            <div class="vb-print-opt" data-pm="palace-current" style="padding:12px 16px;cursor:pointer;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#1C1C1C;border-bottom:0.5px solid #ECE5D9;white-space:nowrap;text-align:left;">This palace</div>
+            <div class="vb-print-opt" data-pm="palaces" style="padding:12px 16px;cursor:pointer;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#1C1C1C;white-space:nowrap;text-align:left;">All palaces</div>
+          </div>
         </div>
-        <span id="vb-finish" style="cursor:pointer;color:#C9A96E;">Complete &rarr;</span>
-        <span id="vb-reset" style="cursor:pointer;">Reset</span>
+        <span id="vb-finish" style="cursor:pointer;font-weight:500;color:#A97F1C;">Complete &rarr;</span>
       </div>
     </div>
   </header>
@@ -76,32 +79,31 @@
       <div style="position:absolute;width:70vw;height:70vw;right:-14vw;bottom:-20vw;z-index:0;border-radius:50%;background:radial-gradient(circle at 60% 60%, rgba(150,178,180,0.28), rgba(150,178,180,0) 62%);filter:blur(40px);animation:vbWaveB 21s ease-in-out infinite;"></div>
       <div style="position:absolute;inset:0;z-index:0;opacity:0.55;background-image:repeating-linear-gradient(180deg, rgba(150,178,180,0.12) 0px, rgba(150,178,180,0) 1.5px, rgba(150,178,180,0) 11px, rgba(201,169,110,0.08) 12.5px);background-size:100% 320px;animation:vbRipple 18s linear infinite;"></div>
       <div style="position:relative;z-index:2;text-align:center;max-width:560px;display:flex;flex-direction:column;align-items:center;">
-        <div style="font-size:10px;letter-spacing:5px;text-transform:uppercase;color:#9A8F82;margin-bottom:26px;">&pi; &times; Zi Wei</div>
-        <div id="vb-hero-wheel-wrap" style="position:relative;width:min(418px,80vw);aspect-ratio:1/1;margin-bottom:30px;">
+        <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:26px;"><span style="text-transform:none;font-family:'Cormorant Garamond',serif;font-size:17px;line-height:0;vertical-align:-2px;">&pi;</span> &times; Zi Wei</div>
+        <div id="vb-hero-wheel-wrap" style="position:relative;width:min(460px,88vw);aspect-ratio:1/1;margin-bottom:30px;">
           <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:3px;width:40%;z-index:5;pointer-events:none;">
             <span style="font-family:'Cormorant Garamond',serif;font-weight:500;color:#1C1C1C;font-size:clamp(8px,1.15vw,10.5px);white-space:nowrap;">Your name</span>
-            <span style="font-weight:300;letter-spacing:0.5px;color:#9A8F82;font-size:clamp(5.5px,0.72vw,7px);font-style:italic;">your mantra</span>
+            <span style="font-weight:300;letter-spacing:0.5px;color:#6E635A;font-size:clamp(5.5px,0.72vw,7px);font-style:italic;">your mantra</span>
             <span style="font-family:'Cormorant Garamond',serif;color:#C9A96E;opacity:0.55;font-size:clamp(6.5px,0.9vw,8px);">&pi;</span>
           </div>
           <svg id="vb-hero-svg" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;"></svg>
         </div>
         <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(36px,5.6vw,58px);line-height:1.05;margin:0 0 16px;color:#1C1C1C;letter-spacing:0.5px;">Manifest in <span style="color:#C9A96E;">&pi;</span></h1>
         <p style="font-size:15px;line-height:1.7;color:#6E665C;max-width:420px;margin:0 auto 32px;">Map your life across 12 palaces.</p>
-        <button class="vb-cta-begin" style="background:#1C1C1C;color:#F8F5F0;border:none;cursor:pointer;font-family:inherit;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:15px 38px;">Begin</button>
-        <div style="margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:#9A8F82;letter-spacing:0.3px;">pay as you want</div>
-        <div style="margin-top:40px;font-size:9px;letter-spacing:3px;color:#B8AFA2;text-transform:uppercase;">Scroll &darr;</div>
+        <button class="vb-cta-begin" style="background:#1C1C1C;color:#F8F5F0;border:none;cursor:pointer;font-family:inherit;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:15px 38px;">Pay as you want</button>
+        <div style="margin-top:40px;font-size:9px;letter-spacing:3px;color:#8E8478;text-transform:uppercase;">Scroll &darr;</div>
       </div>
     </div>
 
     <!-- A LOOK INSIDE -->
     <div style="border-bottom:0.5px solid #E0D9CE;">
       <div style="max-width:1100px;margin:0 auto;padding:92px 32px;">
-        <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#C9A96E;margin-bottom:14px;text-align:center;">A look inside</div>
-        <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(20px,2.5vw,27px);line-height:1.45;color:#2A2620;text-align:center;max-width:680px;margin:0 auto 52px;">How your board looks &mdash; filled with your own words and images.</p>
+        <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:14px;text-align:center;">A look inside</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(20px,2.5vw,27px);line-height:1.45;color:#2A2620;text-align:center;max-width:680px;margin:0 auto 52px;">How your board looks &mdash; filled with your own words and visuals.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:34px;">
 
           <div>
-            <div style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#9A8F82;margin-bottom:12px;">Your map</div>
+            <div style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#6E635A;margin-bottom:12px;">Your map</div>
             <div style="background:#FBF9F5;border:0.5px solid #E0D9CE;border-radius:3px;box-shadow:0 10px 30px rgba(28,28,28,0.06);height:340px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
               <svg id="vb-sample-chart" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;"></svg>
               <svg id="vb-sample-visual" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" style="display:none;width:100%;height:100%;"></svg>
@@ -110,30 +112,30 @@
               <span style="font-size:11px;line-height:1.5;color:#8A8276;flex:1;">Your 12 palaces, mapped as one circle &mdash; read it in words or in images.</span>
               <div id="vb-look-toggle" style="display:flex;border:0.5px solid #E0D9CE;background:#fff;flex-shrink:0;">
                 <button data-look="text" style="height:26px;padding:0 12px;border:none;border-right:0.5px solid #E0D9CE;background:#1C1C1C;color:#fff;cursor:pointer;font-family:inherit;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;">Text</button>
-                <button data-look="visual" style="height:26px;padding:0 12px;border:none;background:#fff;color:#9A8F82;cursor:pointer;font-family:inherit;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;">Visual</button>
+                <button data-look="visual" style="height:26px;padding:0 12px;border:none;background:#fff;color:#6E635A;cursor:pointer;font-family:inherit;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;">Visual</button>
               </div>
             </div>
           </div>
 
           <div>
-            <div style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#9A8F82;margin-bottom:12px;">Your palace</div>
+            <div style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#6E635A;margin-bottom:12px;">Your palace</div>
             <div style="position:relative;background:#FDFBF8;border:0.5px solid #E0D9CE;border-radius:3px;box-shadow:0 10px 30px rgba(28,28,28,0.06);height:340px;overflow:hidden;background-image:linear-gradient(rgba(0,0,0,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.022) 1px,transparent 1px);background-size:24px 24px;">
               <div style="position:absolute;top:18px;left:20px;z-index:6;">
                 <div style="display:flex;align-items:center;gap:7px;margin-bottom:6px;">
-                  <span style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E;">Palace</span>
+                  <span style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#8A6A2F;">Palace</span>
                   <span style="font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:#1C1C1C;font-weight:600;background:rgba(201,169,110,0.24);padding:3px 7px;border-bottom:1.5px solid #C9A96E;">Relationship</span>
                 </div>
-                <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:17px;color:#C9A96E;">I am grateful&hellip;</div>
+                <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:17px;color:#A97F1C;">I am grateful&hellip;</div>
               </div>
               <!-- hero image -->
-              <div style="position:absolute;top:50px;right:16px;width:118px;height:88px;background:#EEE7DA;border:0.5px solid #D9C9A0;display:flex;align-items:center;justify-content:center;transform:rotate(2deg);box-shadow:0 6px 16px rgba(28,28,28,0.1);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span style="position:absolute;bottom:-16px;left:0;right:0;text-align:center;font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:#C9A96E;">&#10023; Hero</span></div>
+              <div style="position:absolute;top:50px;right:16px;width:118px;height:88px;background:#EEE7DA;border:0.5px solid #D9C9A0;display:flex;align-items:center;justify-content:center;transform:rotate(2deg);box-shadow:0 6px 16px rgba(28,28,28,0.1);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span style="position:absolute;bottom:-16px;left:0;right:0;text-align:center;font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:#8A6A2F;">&#10023; Hero</span></div>
               <!-- second image -->
               <div style="position:absolute;top:220px;right:20px;width:100px;height:74px;background:#EEE7DA;border:0.5px solid #E0D9CE;display:flex;align-items:center;justify-content:center;transform:rotate(-3deg);box-shadow:0 5px 14px rgba(28,28,28,0.08);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8AFA2" stroke-width="1.1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
               <!-- featured notes (3) + one plain in the open space -->
-              <div style="position:absolute;top:82px;left:26px;width:150px;background:#FBF6E9;border:0.5px solid #E0CDA0;box-shadow:0 4px 12px rgba(28,28,28,0.07);padding:9px 12px 9px 16px;font-size:10.5px;line-height:1.4;color:#5A5248;transform:rotate(-2deg);"><span style="position:absolute;left:6px;top:9px;color:#C9A96E;font-size:8px;">&#10023;</span>I laugh with my partner every day.</div>
-              <div style="position:absolute;top:134px;left:40px;width:140px;background:#FBF6E9;border:0.5px solid #E0CDA0;box-shadow:0 4px 12px rgba(28,28,28,0.07);padding:9px 12px 9px 16px;font-size:10.5px;line-height:1.4;color:#5A5248;transform:rotate(1.5deg);"><span style="position:absolute;left:6px;top:9px;color:#C9A96E;font-size:8px;">&#10023;</span>Held, and free at the same time.</div>
-              <div style="position:absolute;top:186px;left:22px;width:150px;background:#FBF6E9;border:0.5px solid #E0CDA0;box-shadow:0 4px 12px rgba(28,28,28,0.07);padding:9px 12px 9px 16px;font-size:10.5px;line-height:1.4;color:#5A5248;transform:rotate(-1deg);"><span style="position:absolute;left:6px;top:9px;color:#C9A96E;font-size:8px;">&#10023;</span>We travel slowly, in no hurry.</div>
-              <div style="position:absolute;top:158px;left:198px;width:150px;background:#fff;border:0.5px solid #E0D9CE;box-shadow:0 3px 10px rgba(28,28,28,0.05);padding:9px 12px 9px 16px;font-size:10.5px;line-height:1.4;color:#8A8276;transform:rotate(1.5deg);"><span style="position:absolute;left:6px;top:9px;color:#B8AFA2;font-size:8px;">&#10023;</span>Sunday mornings, unhurried.</div>
+              <div style="position:absolute;top:76px;left:24px;width:152px;background:#FBF6E9;border:0.5px solid #E0CDA0;box-shadow:0 4px 12px rgba(28,28,28,0.07);padding:9px 12px 9px 16px;font-size:10.5px;line-height:1.4;color:#5A5248;transform:rotate(-2deg);"><span style="position:absolute;left:6px;top:9px;color:#C9A96E;font-size:8px;">&#10023;</span>&hellip;to become a better version of myself</div>
+              <div style="position:absolute;top:158px;left:46px;width:150px;background:#FBF6E9;border:0.5px solid #E0CDA0;box-shadow:0 4px 12px rgba(28,28,28,0.07);padding:9px 12px 9px 16px;font-size:10.5px;line-height:1.4;color:#5A5248;transform:rotate(1.5deg);"><span style="position:absolute;left:6px;top:9px;color:#C9A96E;font-size:8px;">&#10023;</span>&hellip;to laugh with my partner every day</div>
+              <div style="position:absolute;top:244px;left:22px;width:156px;background:#FBF6E9;border:0.5px solid #E0CDA0;box-shadow:0 4px 12px rgba(28,28,28,0.07);padding:9px 12px 9px 16px;font-size:10.5px;line-height:1.4;color:#5A5248;transform:rotate(-1.5deg);"><span style="position:absolute;left:6px;top:9px;color:#C9A96E;font-size:8px;">&#10023;</span>&hellip;to see him getting motivated day by day</div>
+              <div style="position:absolute;top:150px;left:208px;width:162px;background:#fff;border:0.5px solid #E0D9CE;box-shadow:0 3px 10px rgba(28,28,28,0.05);padding:9px 12px 9px 16px;font-size:10.5px;line-height:1.4;color:#8A8276;transform:rotate(1.5deg);"><span style="position:absolute;left:6px;top:9px;color:#8E8478;font-size:8px;">&#10023;</span>&hellip;slow mornings: coffee and sun through the window</div>
             </div>
           </div>
 
@@ -143,22 +145,21 @@
 
     <!-- WHY PI -->
     <div style="max-width:920px;margin:0 auto;padding:96px 32px 84px;">
-      <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#C9A96E;margin-bottom:26px;text-align:center;">Why &pi;</div>
-      <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(22px,2.8vw,30px);line-height:1.5;color:#2A2620;text-align:center;max-width:760px;margin:0 auto 56px;">I&rsquo;m an architect &mdash; I notice proportion in everything. Last month I fell for a single number. Not a school of thought, just the idea of it: &pi; never ends and never repeats, yet it draws every circle, every wave, every spiral.</p>
+      <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:26px;text-align:center;">Why <span style="text-transform:none;font-family:'Cormorant Garamond',serif;font-size:17px;line-height:0;vertical-align:-2px;">&pi;</span></div>
+      <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(22px,2.8vw,30px);line-height:1.5;color:#2A2620;text-align:center;max-width:760px;margin:0 auto 56px;"><span style="font-style:italic;">Nature is written in &pi;.</span><br/>Pi is more than a mathematical concept &mdash; it is a bridge that translates abstract geometry into physical reality. It is the fundamental shape of a life, and life still becoming: dynamic, never fixed.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:#E0D9CE;border:0.5px solid #E0D9CE;">
-        <div style="background:#FBF9F5;padding:26px 24px;"><div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#1C1C1C;margin-bottom:7px;">The Golden Ratio &phi;</div><div style="font-size:12px;line-height:1.6;color:#7A7268;">Proportion that feels alive &mdash; in buildings, shells, and faces.</div></div>
-        <div style="background:#FBF9F5;padding:26px 24px;"><div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#1C1C1C;margin-bottom:7px;">Fibonacci</div><div style="font-size:12px;line-height:1.6;color:#7A7268;">The count nature keeps, from leaves to the spiral of galaxies.</div></div>
-        <div style="background:#FBF9F5;padding:26px 24px;"><div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#1C1C1C;margin-bottom:7px;">The I Ching</div><div style="font-size:12px;line-height:1.6;color:#7A7268;">Endless human conditions held within a simple structure.</div></div>
-        <div style="background:#FBF9F5;padding:26px 24px;"><div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#1C1C1C;margin-bottom:7px;">Archimedes</div><div style="font-size:12px;line-height:1.6;color:#7A7268;">Our patient, iterative chase to measure the infinite.</div></div>
+        <div style="background:#FBF9F5;padding:26px 24px;"><div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#1C1C1C;margin-bottom:5px;">Archimedes</div><div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:13px;color:#A97F1C;margin-bottom:9px;">The original seeker</div><div style="font-size:12px;line-height:1.6;color:#7A7268;">Even if we never reach the end of &pi;, patient human effort brings us closer and closer.</div></div>
+        <div style="background:#FBF9F5;padding:26px 24px;"><div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#1C1C1C;margin-bottom:5px;">Fibonacci</div><div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:13px;color:#A97F1C;margin-bottom:9px;">Growth from one rule</div><div style="font-size:12px;line-height:1.6;color:#7A7268;">A few simple, countable steps spiral into natural growth &mdash; nature building infinite form from a single repeating pattern.</div></div>
+        <div style="background:#FBF9F5;padding:26px 24px;"><div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#1C1C1C;margin-bottom:5px;">Wave Motion</div><div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:13px;color:#A97F1C;margin-bottom:9px;">The vibration of existence</div><div style="font-size:12px;line-height:1.6;color:#7A7268;">Everything that vibrates &mdash; a guitar string, a star&rsquo;s light &mdash; is measured by &pi;. Every wave is a cycle, a circular motion; our world runs on infinite rhythm.</div></div>
       </div>
-      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:#C9A96E;text-align:center;margin:50px 0 0;">Irrational. Infinite. Everywhere. So is possibility.</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:20px;color:#A97F1C;text-align:center;margin:50px 0 0;">Irrational. Infinite. Everywhere &mdash; and so is possibility.</p>
     </div>
 
     <!-- 12 PALACES -->
     <div style="background:#F1EBE1;border-top:0.5px solid #E0D9CE;border-bottom:0.5px solid #E0D9CE;">
       <div style="max-width:760px;margin:0 auto;padding:90px 32px 46px;text-align:center;">
-        <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#C9A96E;margin-bottom:22px;">12 Palaces</div>
-        <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(20px,2.5vw,27px);line-height:1.5;color:#2A2620;margin:0 0 20px;"><span style="font-style:italic;">Zi Wei Dou Shu</span> (Purple Star Astrology) &mdash; a traditional and sophisticated way of reading a life as 12 palaces.</p>
+        <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:22px;">12 Palaces</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(20px,2.5vw,27px);line-height:1.5;color:#2A2620;margin:0 0 20px;"><span style="font-style:italic;">Zi Wei Dou Shu</span> (Purple Star Astrology) &mdash; a traditional and sophisticated Chinese way of reading a life as 12 palaces.</p>
         <p style="font-size:14.5px;line-height:1.75;color:#4A4540;max-width:600px;margin:0 auto;">Each governs one area &mdash; who you are, wealth, relationships, travel, home, and more. None stands alone; they interconnect, like the digits of &pi;.</p>
         <div style="margin-top:30px;"><span id="vb-zw-link2" style="cursor:pointer;font-size:10px;letter-spacing:3px;color:#1C1C1C;text-transform:uppercase;border-bottom:0.5px solid #C9A96E;padding-bottom:3px;">Read about Zi Wei &rarr;</span></div>
       </div>
@@ -169,7 +170,7 @@
 
     <!-- HOW IT WORKS -->
     <div style="max-width:1000px;margin:0 auto;padding:90px 32px;">
-      <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#C9A96E;margin-bottom:48px;text-align:center;">How you manifest</div>
+      <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:48px;text-align:center;">How you manifest</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:40px;">
         <div style="text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#C9A96E;margin-bottom:14px;">01</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#1C1C1C;margin-bottom:10px;">Reflect</div><div style="font-size:13px;line-height:1.65;color:#7A7268;">Sit with each palace and what you truly want.</div></div>
         <div style="text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#C9A96E;margin-bottom:14px;">02</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#1C1C1C;margin-bottom:10px;">Build</div><div style="font-size:13px;line-height:1.65;color:#7A7268;">Add your words and visions to the board.</div></div>
@@ -181,9 +182,9 @@
     <div id="vb-offering" style="position:relative;overflow:hidden;padding:104px 24px 116px;">
       <div style="position:absolute;width:60vw;height:60vw;left:50%;top:50%;transform:translate(-50%,-50%);z-index:0;border-radius:50%;background:radial-gradient(circle, rgba(201,169,110,0.16), rgba(201,169,110,0) 64%);filter:blur(30px);animation:vbWaveA 19s ease-in-out infinite;"></div>
       <div style="position:relative;z-index:2;max-width:780px;margin:0 auto;text-align:center;">
-        <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#C9A96E;margin-bottom:26px;">Give as you want &middot; from 3.14</div>
+        <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:26px;">Give as you want &middot; from 3.14</div>
         <h2 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(26px,3.4vw,42px);line-height:1.18;color:#1C1C1C;margin:0 auto 18px;max-width:880px;">Take a deep breath.<br/>Hold a number in your heart and mind.</h2>
-        <p style="font-size:14px;line-height:1.7;color:#6E665C;max-width:430px;margin:0 auto 40px;">Whatever you offer is a gift &mdash; and it already lives somewhere inside &pi;. Give what feels true to you.</p>
+        <p style="font-size:14px;line-height:1.7;color:#6E665C;max-width:430px;margin:0 auto 40px;">Give what feels true to you. Whatever you offer is a gift &mdash; and it already lives somewhere inside &pi;.</p>
 
         <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
           <div style="display:flex;align-items:flex-end;gap:12px;">
@@ -192,22 +193,22 @@
                 <option value="USD">$ USD</option>
                 <option value="EUR">&euro; EUR</option>
               </select>
-              <span style="position:absolute;right:8px;font-size:7px;color:#9A8F82;pointer-events:none;">&#9660;</span>
+              <span style="position:absolute;right:8px;font-size:7px;color:#6E635A;pointer-events:none;">&#9660;</span>
             </div>
             <div style="display:flex;align-items:flex-end;gap:6px;border-bottom:1.5px solid #C9A96E;padding:0 4px 8px;">
               <span id="vb-cur-sym" style="font-family:'Cormorant Garamond',serif;font-size:38px;color:#C9A96E;line-height:1;">$</span>
               <input id="vb-amount" type="number" min="3.14" max="99.99" step="0.01" inputmode="decimal" placeholder="3.14" style="width:190px;border:none;outline:none;background:transparent;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:52px;color:#1C1C1C;text-align:center;line-height:1;"/>
             </div>
           </div>
-          <button id="vb-find" style="background:#1C1C1C;color:#F8F5F0;border:none;cursor:pointer;font-family:inherit;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:14px 30px;">Find my number</button>
-          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:#A89D8C;line-height:1.5;">A gift is held up to 99.99.</div>
+          <button id="vb-find" style="background:#1C1C1C;color:#F8F5F0;border:none;cursor:pointer;font-family:inherit;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:14px 30px;">Enter my number</button>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:#6E635A;line-height:1.5;">A gift is held up to 99.99.</div>
         </div>
 
         <div id="vb-reveal" style="display:none;margin-top:46px;">
           <div id="vb-reveal-digits" style="font-family:'Inter',monospace;font-size:14px;letter-spacing:1px;line-height:1.9;color:#B0A899;word-break:break-all;max-width:560px;margin:0 auto 22px;"></div>
           <div id="vb-reveal-line" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:#1C1C1C;line-height:1.4;margin-bottom:34px;"></div>
           <button id="vb-pay" style="background:#C9A96E;color:#1C1C1C;border:none;cursor:pointer;font-family:inherit;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;padding:16px 38px;font-weight:500;">Give &amp; enter &rarr;</button>
-          <div style="margin-top:16px;font-size:10px;letter-spacing:0.5px;color:#B8AFA2;">A gentle demo &mdash; no real charge yet.</div>
+          <div style="margin-top:16px;font-size:10px;letter-spacing:0.5px;color:#8E8478;">A gentle demo &mdash; no real charge yet.</div>
           <div style="max-width:460px;margin:22px auto 0;">
             <details style="border:0.5px solid #E0D9CE;background:#FCFAF6;text-align:left;">
               <summary style="list-style:none;cursor:pointer;padding:13px 18px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#6E665C;">An important reminder <span style="font-size:7px;">&#9662;</span></summary>
@@ -224,7 +225,7 @@
 
     <footer style="border-top:0.5px solid #E0D9CE;padding:40px 32px;text-align:center;background:#F1EBE1;">
       <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#C9A96E;margin-bottom:8px;">&pi;</div>
-      <div style="font-size:10px;letter-spacing:2px;color:#9A8F82;text-transform:uppercase;margin-bottom:18px;">Zi Wei Vision Board &middot; made with &pi;</div>
+      <div style="font-size:10px;letter-spacing:2px;color:#6E635A;text-transform:uppercase;margin-bottom:18px;">Zi Wei Vision Board &middot; made with <span style="text-transform:none;font-family:'Cormorant Garamond',serif;font-size:15px;line-height:0;vertical-align:-2px;">&pi;</span></div>
       <div style="display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap;">
         <span id="vb-zw-link" style="cursor:pointer;font-size:10px;letter-spacing:3px;color:#1C1C1C;text-transform:uppercase;border-bottom:0.5px solid #C9A96E;padding-bottom:3px;">About Zi Wei</span>
         <span id="vb-contact-link" style="cursor:pointer;font-size:10px;letter-spacing:3px;color:#1C1C1C;text-transform:uppercase;border-bottom:0.5px solid #C9A96E;padding-bottom:3px;">Get in touch</span>
@@ -238,19 +239,19 @@
     <div id="vb-toolbar-wrap" style="flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:12px 0 2px;position:relative;">
       <div id="vb-toggle" style="display:flex;border:0.5px solid #E0D9CE;background:#fff;">
         <button data-mode="pi" style="width:42px;height:28px;border:none;border-right:0.5px solid #E0D9CE;background:#1C1C1C;color:#fff;cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:500;">&pi;</button>
-        <button data-mode="text" style="height:28px;padding:0 13px;border:none;border-right:0.5px solid #E0D9CE;background:#fff;color:#9A8F82;cursor:pointer;font-family:inherit;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;">Text</button>
-        <button data-mode="visual" style="height:28px;padding:0 13px;border:none;background:#fff;color:#9A8F82;cursor:pointer;font-family:inherit;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;">Visual</button>
+        <button data-mode="text" style="height:28px;padding:0 13px;border:none;border-right:0.5px solid #E0D9CE;background:#fff;color:#6E635A;cursor:pointer;font-family:inherit;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;">Text</button>
+        <button data-mode="visual" style="height:28px;padding:0 13px;border:none;background:#fff;color:#6E635A;cursor:pointer;font-family:inherit;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;">Visual</button>
       </div>
-      <span id="vb-view-hint" style="position:absolute;right:28px;top:50%;transform:translateY(-50%);font-size:9px;letter-spacing:1.5px;color:#9A8F82;text-transform:uppercase;"></span>
+      <span id="vb-view-hint" style="position:absolute;right:28px;top:50%;transform:translateY(-50%);font-size:9px;letter-spacing:1.5px;color:#6E635A;text-transform:uppercase;"></span>
     </div>
-    <div id="vb-session-note" style="flex-shrink:0;text-align:center;font-size:9px;letter-spacing:1px;color:#B8AFA2;padding:0 16px 6px;">This board lives only while this tab is open &mdash; print it before you leave.</div>
+    <div id="vb-session-note" style="flex-shrink:0;text-align:center;font-size:9px;letter-spacing:1px;color:#8E8478;padding:0 16px 6px;">This board lives only while this tab is open &mdash; print it before you leave.</div>
 
     <div id="vb-views" style="flex:1;position:relative;min-height:0;">
       <div id="vb-view-pi" class="vb-view" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:18px 24px 26px;">
         <div id="vb-wheel-wrap" style="position:relative;width:min(560px,82vh,90vw);aspect-ratio:1/1;">
           <div id="vb-center" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:26%;z-index:5;">
             <input id="vb-name" type="text" placeholder="Your name" maxlength="20" spellcheck="false" style="font-family:'Cormorant Garamond',serif;font-weight:500;color:#1C1C1C;text-align:center;background:transparent;border:none;outline:none;width:100%;font-size:clamp(12px,1.9vw,17px);"/>
-            <input id="vb-mantra" type="text" placeholder="your mantra" maxlength="34" spellcheck="false" style="font-weight:300;letter-spacing:0.5px;color:#9A8F82;text-align:center;background:transparent;border:none;outline:none;width:100%;font-size:clamp(8px,1.05vw,10px);"/>
+            <input id="vb-mantra" type="text" placeholder="your mantra" maxlength="34" spellcheck="false" style="font-weight:300;letter-spacing:0.5px;color:#6E635A;text-align:center;background:transparent;border:none;outline:none;width:100%;font-size:clamp(8px,1.05vw,10px);"/>
             <span id="vb-center-pi" style="font-family:'Cormorant Garamond',serif;color:#C9A96E;opacity:0.5;font-size:clamp(9px,1.3vw,12px);">&pi;</span>
           </div>
           <svg id="vb-svg" viewBox="0 0 580 580" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;">
@@ -299,12 +300,14 @@
     <div style="flex:1;position:relative;overflow:hidden;">
       <div id="vb-canvas" tabindex="0" style="position:relative;width:100%;height:100%;outline:none;background:#FDFBF8;background-image:linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px);background-size:26px 26px;">
         <div id="vb-canvas-heading" style="position:absolute;top:22px;left:32px;z-index:5;pointer-events:none;">
-          <div style="font-size:9px;letter-spacing:4px;color:#C9A96E;text-transform:uppercase;margin-bottom:6px;">Palace</div>
-          <div id="vb-pal-title" style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:26px;letter-spacing:0.5px;color:#1C1C1C;">Title</div>
+          <div style="display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;">
+            <div style="font-size:10px;font-weight:500;letter-spacing:4px;color:#8A6A2F;text-transform:uppercase;">Palace</div>
+            <div id="vb-pal-title" style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:26px;letter-spacing:0.5px;color:#1C1C1C;">Title</div>
+          </div>
           <div id="vb-pal-theme" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#5A5248;margin-top:7px;"></div>
-          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:19px;color:#C9A96E;margin-top:14px;">I am grateful&hellip;</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:19px;color:#A97F1C;margin-top:14px;">I am grateful&hellip;</div>
         </div>
-        <div id="vb-canvas-hint" style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:#B8AFA2;font-size:10.5px;letter-spacing:1px;text-align:center;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div id="vb-canvas-hint" style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:#8E8478;font-size:10.5px;letter-spacing:1px;text-align:center;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:8px;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8AFA2" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
           <span>Click anywhere to add a note &middot; screenshot or copy an image, then paste (&#8984; / Ctrl + V)</span>
         </div>
@@ -322,29 +325,29 @@
     <div style="max-width:560px;margin:0 auto;padding:84px 32px 96px;">
       <div style="text-align:center;margin-bottom:44px;">
         <div style="font-family:'Cormorant Garamond',serif;font-size:40px;color:#C9A96E;line-height:1;margin-bottom:18px;">&pi;</div>
-        <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#9A8F82;margin-bottom:18px;">Get in touch</div>
-        <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(17px,2.2vw,21px);line-height:1.6;color:#2A2620;text-align:left;">The possibility of activating the power of &pi; and Zi Wei is endless. I am consistently working to improve this vision board and the broader idea of self-reflection and self-improvement. I welcome your feedback and advice to help me along this journey. Thank you for your time, and for your giving.</p>
+        <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:18px;">Get in touch</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(17px,2.2vw,21px);line-height:1.6;color:#2A2620;text-align:left;">The possibilities within the intersection of &pi; and Zi Wei are endless. I am actively evolving this vision board, expanding its features to better serve the overarching concept of self-reflection and improvement. Your advice and feedback would be invaluable to me as I develop this further. Thank you for your time and your giving.</p>
       </div>
       <form id="vb-contact-form" style="display:flex;flex-direction:column;gap:22px;">
         <label style="display:flex;flex-direction:column;gap:8px;">
-          <span style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#9A8F82;">Name</span>
+          <span style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#6E635A;">Name</span>
           <input type="text" name="name" style="border:none;border-bottom:1px solid #D9D0C2;background:transparent;outline:none;font-family:inherit;font-size:15px;color:#1C1C1C;padding:8px 2px;"/>
         </label>
         <label style="display:flex;flex-direction:column;gap:8px;">
-          <span style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#9A8F82;">Email</span>
+          <span style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#6E635A;">Email</span>
           <input type="email" name="email" style="border:none;border-bottom:1px solid #D9D0C2;background:transparent;outline:none;font-family:inherit;font-size:15px;color:#1C1C1C;padding:8px 2px;"/>
         </label>
         <label style="display:flex;flex-direction:column;gap:8px;">
-          <span style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#9A8F82;">Message</span>
+          <span style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#6E635A;">Message</span>
           <textarea name="message" rows="4" style="border:1px solid #D9D0C2;background:rgba(255,255,255,0.5);outline:none;font-family:inherit;font-size:15px;color:#1C1C1C;padding:12px;resize:vertical;line-height:1.6;"></textarea>
         </label>
         <div style="display:flex;align-items:center;gap:20px;margin-top:6px;">
           <button type="submit" style="background:#1C1C1C;color:#F8F5F0;border:none;cursor:pointer;font-family:inherit;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:15px 36px;">Send</button>
-          <span id="vb-contact-sent" style="display:none;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:#C9A96E;">Thank you &mdash; received with gratitude.</span>
+          <span id="vb-contact-sent" style="display:none;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:15px;color:#A97F1C;">Thank you &mdash; received with gratitude.</span>
         </div>
       </form>
       <div style="text-align:center;margin-top:48px;">
-        <span id="vb-contact-home" style="cursor:pointer;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#9A8F82;">&larr; Back to start</span>
+        <span id="vb-contact-home" style="cursor:pointer;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#6E635A;">&larr; Back to start</span>
       </div>
     </div>
   </section>
@@ -353,19 +356,19 @@
   <section id="vb-zwabout" class="vb-scroll" style="display:none;position:relative;z-index:5;height:calc(100% - 64px);overflow-y:auto;background:linear-gradient(180deg,#F8F5F0 0%,#F1EBE1 100%);">
     <div style="max-width:620px;margin:0 auto;padding:84px 32px 96px;">
       <div style="text-align:center;margin-bottom:40px;">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:40px;color:#C9A96E;line-height:1;margin-bottom:16px;">&#32043;</div>
-        <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#9A8F82;margin-bottom:16px;">About Zi Wei</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:40px;color:#C9A96E;line-height:1;margin-bottom:16px;">&#32043;&#24494;</div>
+        <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#6E635A;margin-bottom:16px;">About Zi Wei</div>
         <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(26px,3.4vw,38px);line-height:1.15;color:#1C1C1C;margin:0;">Zi Wei Dou Shu</h2>
-        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:#9A8F82;margin-top:8px;">&#32043;&#24494;&#26007;&#25968; &middot; Purple Star Astrology</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:#6E635A;margin-top:8px;">&#32043;&#24494;&#26007;&#25968; &middot; Purple Star Astrology</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:22px;font-size:15px;line-height:1.78;color:#3A352E;">
         <p style="margin:0;">Zi Wei Dou Shu is one of the most refined systems of Chinese astrology, practised for over a thousand years. Its name points to <span style="font-style:italic;font-family:'Cormorant Garamond',serif;font-size:17px;">Zi Wei</span> &mdash; the North Star &mdash; the still point around which everything else turns.</p>
         <p style="margin:0;">From the moment of your birth it draws a chart of <span style="color:#1C1C1C;">12 palaces</span>, each a different room of a life: who you are, your wealth, your relationships, your travels, your home, your inner peace, and more. A constellation of stars falls across them, and the way those stars meet and answer one another sketches your tendencies, your seasons, and your possibilities.</p>
-        <p style="margin:0;">It is not a verdict. It is a map &mdash; a way of seeing a whole life at once, and noticing how each part speaks to the others. Where you choose to walk on it remains entirely yours.</p>
-        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:#C9A96E;text-align:center;margin:18px 0 0;">Twelve rooms, one life &mdash; none of them standing alone.</p>
+        <p style="margin:0;">It is not a verdict. It is a map &mdash; a way of understanding yourself better, seeing a whole life at once and noticing how each part speaks to the others. And it is a guide &mdash; showing you how to activate your potential and soften your weaknesses, so you can grow into the fullest expression of your life.</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:19px;color:#A97F1C;text-align:center;margin:18px 0 0;">Twelve rooms, one life &mdash; none of them standing alone.</p>
       </div>
       <div style="text-align:center;margin-top:48px;">
-        <span id="vb-zw-home" style="cursor:pointer;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#9A8F82;">&larr; Back to start</span>
+        <span id="vb-zw-home" style="cursor:pointer;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#6E635A;">&larr; Back to start</span>
       </div>
     </div>
   </section>
@@ -376,10 +379,9 @@
     <div style="position:relative;z-index:2;max-width:560px;text-align:center;">
       <div style="font-family:'Cormorant Garamond',serif;font-size:44px;color:#C9A96E;line-height:1;margin-bottom:22px;">&pi;</div>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4.4vw,46px);line-height:1.12;color:#1C1C1C;margin:0 0 26px;">Carry it with you</h2>
-      <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(17px,2.2vw,21px);line-height:1.6;color:#3A352E;margin:0 0 22px;">Your board is yours now &mdash; a quiet map of what you are moving toward. Keep it close, where your eyes will return to it. What you hold in attention, you draw nearer.</p>
-      <p style="font-size:14px;line-height:1.7;color:#7A7268;margin:0 0 40px;max-width:440px;margin-left:auto;margin-right:auto;">I strongly encourage you to fill every palace and print them all, so you may experience the full manifestation journey &mdash; as you deserve it.</p>
+      <p style="font-size:14px;line-height:1.7;color:#574F45;margin:0 0 40px;max-width:440px;margin-left:auto;margin-right:auto;">I strongly encourage you to fill every palace and print them all, so you may experience the full manifestation journey &mdash; as you deserve it.</p>
       <button id="vb-carry-exit" style="background:#1C1C1C;color:#F8F5F0;border:none;cursor:pointer;font-family:inherit;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:16px 40px;">Carried it with me</button>
-      <div style="margin-top:18px;"><span id="vb-carry-back" style="cursor:pointer;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#9A8F82;">&larr; Back to my board</span></div>
+      <div style="margin-top:18px;"><span id="vb-carry-back" style="cursor:pointer;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#6E635A;">&larr; Back to my board</span></div>
     </div>
   </section>
 
@@ -387,16 +389,16 @@
   <div id="vb-howto" style="display:none;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;padding:24px;">
     <div id="vb-howto-bg" style="position:absolute;inset:0;background:rgba(28,28,28,0.34);backdrop-filter:blur(2px);"></div>
     <div style="position:relative;width:min(444px,100%);max-height:88vh;overflow-y:auto;background:#FDFBF8;border:0.5px solid #E0D9CE;box-shadow:0 24px 70px rgba(28,28,28,0.26);padding:36px 36px 32px;">
-      <button id="vb-howto-close" style="position:absolute;top:16px;right:16px;width:26px;height:26px;border:none;background:none;cursor:pointer;color:#9A8F82;font-size:16px;font-family:inherit;line-height:1;">&#10005;</button>
-      <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#C9A96E;margin-bottom:8px;">How to write</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:24px;color:#1C1C1C;margin-bottom:22px;">Write the feeling, not the thing</div>
-      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#9A8F82;margin-bottom:14px;">For example &middot; Relationship</div>
+      <button id="vb-howto-close" style="position:absolute;top:16px;right:16px;width:26px;height:26px;border:none;background:none;cursor:pointer;color:#6E635A;font-size:16px;font-family:inherit;line-height:1;">&#10005;</button>
+      <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:8px;">How to write</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:24px;color:#1C1C1C;margin-bottom:22px;">Write as if it already exists.</div>
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6E635A;margin-bottom:14px;">For example &middot; Relationship</div>
       <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
-        <div style="background:#FBF6E9;border:0.5px solid #E0CDA0;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.5;color:#4A4339;">&ldquo;I am grateful that I can laugh with my partner all the time &mdash; it feels warm and relaxed.&rdquo;</div>
-        <div style="background:#FBF6E9;border:0.5px solid #E0CDA0;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.5;color:#4A4339;">&ldquo;I feel safe and seen, even on ordinary days.&rdquo;</div>
-        <div style="background:#FBF6E9;border:0.5px solid #E0CDA0;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.5;color:#4A4339;">&ldquo;We move through the world together, unhurried and at ease.&rdquo;</div>
+        <div style="background:#FBF6E9;border:0.5px solid #E0CDA0;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.5;color:#4A4339;">&ldquo;&hellip;to become a better version of myself&rdquo;</div>
+        <div style="background:#FBF6E9;border:0.5px solid #E0CDA0;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.5;color:#4A4339;">&ldquo;&hellip;to laugh with my partner every day&rdquo;</div>
+        <div style="background:#FBF6E9;border:0.5px solid #E0CDA0;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.5;color:#4A4339;">&ldquo;&hellip;to see him getting motivated day by day&rdquo;</div>
       </div>
-      <p style="font-size:13.5px;line-height:1.7;color:#6E665C;margin:0;padding-top:20px;border-top:0.5px solid #ECE5D9;">Describe the <em>feeling</em> of having what you desire &mdash; rather than pointing to an object. Write as if it is already true.</p>
+      <p style="font-size:13.5px;line-height:1.7;color:#6E665C;margin:0;padding-top:20px;border-top:0.5px solid #ECE5D9;">Describe the <em>feeling</em> of having what you desire.</p>
     </div>
   </div>
 
@@ -406,10 +408,10 @@
     <div style="position:absolute;inset:0;z-index:0;opacity:0.55;background-image:repeating-linear-gradient(180deg, rgba(150,178,180,0.12) 0px, rgba(150,178,180,0) 1.5px, rgba(150,178,180,0) 11px, rgba(201,169,110,0.08) 12.5px);background-size:100% 320px;animation:vbRipple 18s linear infinite;"></div>
     <div style="position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;max-width:460px;">
       <div id="vb-welcome-pulse" style="font-family:'Cormorant Garamond',serif;font-size:58px;color:#C9A96E;line-height:1;margin-bottom:26px;animation:vbBlink 1.5s ease-in-out infinite;">&pi;</div>
-      <div id="vb-welcome-proc" style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#9A8F82;">Receiving your gift&hellip;</div>
+      <div id="vb-welcome-proc" style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#6E635A;">Receiving your gift&hellip;</div>
       <div id="vb-welcome-done" style="display:none;flex-direction:column;align-items:center;">
         <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:46px;color:#1C1C1C;line-height:1.1;margin-bottom:20px;">Thank you</div>
-        <div style="font-size:12.5px;line-height:1.7;color:#6E665C;max-width:340px;margin:0 0 30px;">This is a one-time vision board &mdash; a quiet retreat for your mind. Stay with it; if you leave the site, your board returns to the beginning.</div>
+        <div style="font-size:13.5px;line-height:1.7;color:#4A443B;max-width:340px;margin:0 0 30px;">This is a one-time vision board &mdash; a quiet retreat for your mind. Stay with it; if you leave the site, your board returns to the beginning.</div>
         <button id="vb-welcome-enter" style="background:#C9A96E;color:#1C1C1C;border:none;cursor:pointer;font-family:inherit;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;padding:16px 40px;font-weight:500;">Enter your board &rarr;</button>
       </div>
     </div>
@@ -462,11 +464,11 @@ class Component extends DCLogic {
         items:['Want to settle down, have a family and prioritize family','Crazy for me in a healthy way — sees me as the best woman','Handsome, tall, above 180cm, age within 5 years of me','West European or well-educated, born and raised in Europe','Well-travelled, adventurous and grounded','Kind, warm smile, makes me feel relaxed and confident','Confident, ambitious, sporty, well-dressed, sincere','Strong mentality, competent and resilient','Compatible with me in strength and passion','Shares my vision, wants me to become better','No kids before me · No divorce · No thin lips'] },
       { id:'kinship', zh:'兄弟宫', name:'Kinship', angle:165, theme:'The clan you choose and build', gloss:'The clan you build',
         items:['Build my own clan — family, partner, core long-lasting friends','Like brothers and sisters — we support each other through difficulty','A close circle: hardworking, smart, open-minded, connection-driven','To have this clan and members all over the world'] },
-      { id:'home', zh:'田宅宫', name:'Home', angle:195, theme:'Where you root, and the home you make', gloss:'Where you root',
+      { id:'home', zh:'田宅宫', name:'Home', angle:195, theme:'Your living environment', gloss:'Your living environment',
         items:['Use my own money and financial plan to buy','An apartment in Paris (20th arr) — under 100sqm for my own stay','An apartment in Milan or Italy for rent and holiday stay','Quiet and bourgeois, old generation apartment, splittable into two'] },
       { id:'parents', zh:'父母宫', name:'Parents', angle:225, theme:'Your roots, and those who guide you', gloss:'Roots and mentors',
         items:['Bring parents to travel in Europe & Middle East — stay with me for a month or two','They have good investment return to support their travels','A knowledgeable, open-minded mentor for professional (70%) and personal (30%) life'] },
-      { id:'karmic', zh:'福德宫', name:'Karmic Fortune', angle:255, theme:'Inner peace, and blessings earned', gloss:'Inner peace and blessing',
+      { id:'karmic', zh:'福德宫', name:'Karmic Fortune', angle:255, theme:'Your inner nature, and the subconscious beneath it', gloss:'Inner nature and subconscious',
         items:['Feel grateful each day','Let go of things that trouble me','Keep inner self simple — calm yet passionate about life','Always feel warm and nurtured inside by myself','Do not get distracted by noise and social media','Believe in the good nature of people — forgiving, no grudges'] }
     ];
 
@@ -499,6 +501,15 @@ class Component extends DCLogic {
     if(paid){ this.enterBoard(); }
     else if(this.startView==='home') this.goHome();
     else { this.enterBoard(); if(this.startView!=='pi') this.switchView(this.startView); }
+
+    let searched=false; try{ searched = sessionStorage.getItem('vb_searched')==='1'; }catch(e){}
+    if(!paid && searched){
+      try{
+        const cur=sessionStorage.getItem('vb_searched_cur'); if(cur) this.setCurrency(cur);
+        const d=sessionStorage.getItem('vb_searched_digits'); const a=sessionStorage.getItem('vb_searched_amt');
+        if(d && a){ this.$('vb-amount').value=a; this.revealNumber(d, a, false); }
+      }catch(e){}
+    }
 
     this._onResize=()=>{ if(this.screen==='board' && this.boardMode!=='pi') this.fitView(); };
     window.addEventListener('resize', this._onResize);
@@ -536,6 +547,8 @@ class Component extends DCLogic {
     const n=this.$('vb-name'); if(n) n.value=''; const m=this.$('vb-mantra'); if(m) m.value=''; const nb=this.$('vb-name-b'); if(nb) nb.value='';
     this.hoverId=null; this.currentPalaceId=null; this.selectedEl=null;
     this.boardBuilt&&this.boardMode&&this.boardMode!=='pi'&&this.buildBoardCards(this.boardMode);
+    this.unlockChosen();
+    this.$('vb-amount').value = (Math.random()*(99.99-3.14) + 3.14).toFixed(2);
     this.goHome();
   };
   payAndEnter = () => {
@@ -564,7 +577,7 @@ class Component extends DCLogic {
       txt.setAttribute('style',`font-family:'Inter',sans-serif;font-size:9px;letter-spacing:2.5px;fill:${this.hexA(this.accent,0.45)};`);
       const tp=document.createElementNS(NS,'textPath'); tp.setAttribute('href','#vb-pi-path'); tp.setAttribute('startOffset','0'); tp.textContent=this.DIGITS;
       txt.appendChild(tp); piG.appendChild(txt);
-      piG.setAttribute('style','transform-box:fill-box;transform-origin:center;animation:vbSpin 300s linear infinite;');
+      piG.setAttribute('style','transform-box:view-box;transform-origin:290px 290px;animation:vbSpin 300s linear infinite;');
     }
     this.palaces.forEach(p=>{
       const mid=p.angle, start=mid-15, end=mid+15;
@@ -600,7 +613,7 @@ class Component extends DCLogic {
     const wrap=this.$('vb-legend'); if(!wrap) return; wrap.innerHTML='';
     this.palaces.forEach(p=>{ const cell=document.createElement('div');
       cell.style.cssText='background:#FBF9F5;padding:18px 20px;display:flex;align-items:baseline;gap:12px;';
-      cell.innerHTML=`<span style="font-size:11px;color:${this.accent};white-space:nowrap;">${p.zh}</span><span><span style="font-family:'Cormorant Garamond',serif;font-size:17px;color:#1C1C1C;">${this.esc(p.name)}</span><span style="display:block;font-size:11.5px;color:#8A8276;margin-top:2px;">${this.esc(p.gloss)}</span></span>`;
+      cell.innerHTML=`<span style="font-size:11px;font-weight:500;color:#A97F1C;white-space:nowrap;">${p.zh}</span><span><span style="font-family:'Cormorant Garamond',serif;font-size:17px;color:#1C1C1C;">${this.esc(p.name)}</span><span style="display:block;font-size:11.5px;color:#8A8276;margin-top:2px;">${this.esc(p.gloss)}</span></span>`;
       wrap.appendChild(cell); });
   };
   buildSampleWheel = () => {
@@ -643,7 +656,7 @@ class Component extends DCLogic {
       const path=document.createElementNS(NS,'path'); path.setAttribute('id','vb-hero-pi-path');
       path.setAttribute('d',`M ${cx},${cy} m -168,0 a 168,168 0 1,1 336,0 a 168,168 0 1,1 -336,0`); path.setAttribute('fill','none');
       defs.appendChild(path); svg.appendChild(defs);
-      const g=document.createElementNS(NS,'g'); g.setAttribute('style','transform-box:fill-box;transform-origin:center;animation:vbSpin 300s linear infinite;');
+      const g=document.createElementNS(NS,'g'); g.setAttribute('style','transform-box:view-box;transform-origin:180px 180px;animation:vbSpin 300s linear infinite;');
       const txt=document.createElementNS(NS,'text'); txt.setAttribute('style',`font-family:'Inter',sans-serif;font-size:7px;letter-spacing:2px;fill:${this.hexA(this.accent,0.42)};`);
       const tp=document.createElementNS(NS,'textPath'); tp.setAttribute('href','#vb-hero-pi-path'); tp.setAttribute('startOffset','0'); tp.textContent=this.DIGITS;
       txt.appendChild(tp); g.appendChild(txt); svg.appendChild(g);
@@ -728,7 +741,7 @@ class Component extends DCLogic {
       } else {
         const img=this.canvasItems[p.id].find(it=>it.hero);
         card.style.cssText=`position:absolute;left:${cx}px;top:${cy}px;transform:translate(-50%,-50%);width:${this.CW}px;background:#fff;border:0.5px solid #E0D9CE;border-radius:3px;overflow:hidden;cursor:pointer;z-index:4;box-shadow:0 4px 16px rgba(28,28,28,0.06);transition:border-color 0.15s;`;
-        card.innerHTML=`<div style="width:100%;aspect-ratio:4/3;background:${img?'#000':'#F3EEE6'};display:flex;align-items:center;justify-content:center;">${img?`<img src="${img.content}" alt="" draggable="false" title="Drag to reposition" style="width:100%;height:100%;object-fit:cover;object-position:${img.fx??50}% ${img.fy??50}%;display:block;cursor:move;-webkit-user-drag:none;user-select:none;"/>`:`<div style="display:flex;flex-direction:column;align-items:center;gap:7px;color:#B8AFA2;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;">Set a hero</span></div>`}</div>`;
+        card.innerHTML=`<div style="width:100%;aspect-ratio:4/3;background:${img?'#000':'#F3EEE6'};display:flex;align-items:center;justify-content:center;">${img?`<img src="${img.content}" alt="" draggable="false" title="Drag to reposition" style="width:100%;height:100%;object-fit:cover;object-position:${img.fx??50}% ${img.fy??50}%;display:block;cursor:move;-webkit-user-drag:none;user-select:none;"/>`:`<div style="display:flex;flex-direction:column;align-items:center;gap:7px;color:#8E8478;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;">Set a hero</span></div>`}</div>`;
       }
       if(mode!=='text'){ const hImg=this.canvasItems[p.id].find(it=>it.hero); const imgEl=card.querySelector('img'); if(hImg&&imgEl){ card.addEventListener('mousedown',(e)=>{ e.preventDefault(); e.stopPropagation(); const sx=e.clientX,sy=e.clientY,sfx=hImg.fx??50,sfy=hImg.fy??50; let moved=false; const mv=(ev)=>{ if(!moved&&Math.hypot(ev.clientX-sx,ev.clientY-sy)>4) moved=true; if(moved){ const dx=(ev.clientX-sx)/(this.scale||1), dy=(ev.clientY-sy)/(this.scale||1); hImg.fx=Math.max(0,Math.min(100,sfx-dx/this.CW*100)); hImg.fy=Math.max(0,Math.min(100,sfy-dy/(this.CW*0.75)*100)); imgEl.style.objectPosition=`${hImg.fx}% ${hImg.fy}%`; } }; const up=()=>{ window.removeEventListener('mousemove',mv); window.removeEventListener('mouseup',up); }; window.addEventListener('mousemove',mv); window.addEventListener('mouseup',up); }); } }
       card.addEventListener('dblclick',()=>{ this.openPalace(p.id); });
@@ -822,28 +835,49 @@ class Component extends DCLogic {
     this.piCache=out.join(''); return this.piCache;
   };
   findNumber=()=>{
+    if(this.numberChosen) return;
     const raw=this.$('vb-amount').value; const amt=parseFloat(raw);
     if(!raw || isNaN(amt) || amt<3.14 || amt>99.99){ this.$('vb-amount').focus(); const inp=this.$('vb-amount'); inp.style.transition='color .15s'; inp.style.color='#B5453A'; setTimeout(()=>inp.style.color='#1C1C1C',500); return; }
     const digits=String(raw).replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'')||'0';
-    const find=this.$('vb-find'); find.textContent='Searching \u03c0\u2026'; find.disabled=true;
-    setTimeout(()=>{
-      const pi = window.PI_DECIMALS || this.generatePiDecimals(3000);
-      const idx=pi.indexOf(digits);
-      const reveal=this.$('vb-reveal'); const dEl=this.$('vb-reveal-digits'); const lEl=this.$('vb-reveal-line');
-      const sym=this.currency==='USD'?'$':'\u20ac'; const amtStr=amt.toFixed(2);
-      if(idx>=0){
-        const pos=idx+1; const a=Math.max(0,idx-26), pre=pi.slice(a,idx), match=pi.slice(idx,idx+digits.length), post=pi.slice(idx+digits.length,idx+digits.length+26);
-        dEl.innerHTML=`<span style="color:#C8BFAE;">3.\u2026${this.esc(pre)}</span><span style="color:#1C1C1C;font-weight:600;background:${this.hexA(this.accent,0.32)};padding:1px 3px;">${this.esc(match)}</span><span style="color:#C8BFAE;">${this.esc(post)}\u2026</span>`;
-        lEl.innerHTML=`Your number lives at position <span style="color:${this.accent};">${pos.toLocaleString()}</span> of \u03c0.<br/>Be certain, everything is already in there.`;
-      } else {
-        dEl.innerHTML=`<span style="color:#C8BFAE;">3.${this.esc(pi.slice(0,52))}\u2026</span>`;
-        lEl.innerHTML=`Your number is so rare it slips beyond the first hundred thousand digits &mdash; held somewhere deeper in \u03c0&rsquo;s endless expansion.`;
-      }
-      this.$('vb-pay').textContent=`Give ${sym}${amtStr} & enter \u2192`;
-      reveal.style.display='block'; reveal.classList.remove('vb-reveal-on'); void reveal.offsetWidth; reveal.classList.add('vb-reveal-on');
-      find.textContent='Find my number'; find.disabled=false;
+    const find=this.$('vb-find'); find.textContent='Entering \u03c0\u2026'; find.disabled=true;
+    setTimeout(()=>{ this.revealNumber(digits, amt.toFixed(2), true); },160);
+  };
+  revealNumber=(digits, amtStr, persist)=>{
+    const pi = window.PI_DECIMALS || this.generatePiDecimals(3000);
+    const idx=pi.indexOf(digits);
+    const reveal=this.$('vb-reveal'); const dEl=this.$('vb-reveal-digits'); const lEl=this.$('vb-reveal-line');
+    const sym=this.currency==='USD'?'$':'\u20ac';
+    if(idx>=0){
+      const pos=idx+1; const a=Math.max(0,idx-26), pre=pi.slice(a,idx), match=pi.slice(idx,idx+digits.length), post=pi.slice(idx+digits.length,idx+digits.length+26);
+      dEl.innerHTML=`<span style="color:#C8BFAE;">3.\u2026${this.esc(pre)}</span><span style="color:#1C1C1C;font-weight:600;background:${this.hexA(this.accent,0.32)};padding:1px 3px;">${this.esc(match)}</span><span style="color:#C8BFAE;">${this.esc(post)}\u2026</span>`;
+      lEl.innerHTML=`Your number lives at position <span style="color:${this.accent};">${pos.toLocaleString()}</span> of \u03c0.<br/>Be certain, everything is already in there.`;
+    } else {
+      dEl.innerHTML=`<span style="color:#C8BFAE;">3.${this.esc(pi.slice(0,52))}\u2026</span>`;
+      lEl.innerHTML=`Your number is so rare it slips beyond the first hundred thousand digits &mdash; held somewhere deeper in \u03c0&rsquo;s endless expansion.`;
+    }
+    this.$('vb-pay').textContent=`Give ${sym}${amtStr} & enter \u2192`;
+    reveal.style.display='block'; reveal.classList.remove('vb-reveal-on'); void reveal.offsetWidth; reveal.classList.add('vb-reveal-on');
+    this.lockChosen();
+    if(persist){
+      try{ sessionStorage.setItem('vb_searched','1'); sessionStorage.setItem('vb_searched_digits',digits); sessionStorage.setItem('vb_searched_amt',amtStr); sessionStorage.setItem('vb_searched_cur',this.currency); }catch(e){}
       const home=this.$('vb-home'); home.scrollTo({top:this.$('vb-offering').offsetTop+120,behavior:'smooth'});
-    },160);
+    }
+  };
+  lockChosen=()=>{
+    this.numberChosen=true;
+    const find=this.$('vb-find'); find.disabled=true; find.textContent='Your number is chosen';
+    find.style.background='transparent'; find.style.color=this.hexA(this.accent,0.9); find.style.border='0.5px solid '+this.hexA(this.accent,0.55); find.style.cursor='not-allowed';
+    const inp=this.$('vb-amount'); inp.readOnly=true; inp.style.color='#9A8F82'; inp.style.cursor='default';
+    const cs=this.$('vb-cur-select'); if(cs){ cs.disabled=true; cs.style.opacity='0.5'; cs.style.cursor='not-allowed'; }
+  };
+  unlockChosen=()=>{
+    this.numberChosen=false;
+    try{ sessionStorage.removeItem('vb_searched'); sessionStorage.removeItem('vb_searched_digits'); sessionStorage.removeItem('vb_searched_amt'); sessionStorage.removeItem('vb_searched_cur'); }catch(e){}
+    const find=this.$('vb-find'); find.disabled=false; find.textContent='Enter my number';
+    find.style.background='#1C1C1C'; find.style.color='#F8F5F0'; find.style.border='none'; find.style.cursor='pointer';
+    const inp=this.$('vb-amount'); inp.readOnly=false; inp.style.color='#1C1C1C'; inp.style.cursor='text';
+    const cs=this.$('vb-cur-select'); if(cs){ cs.disabled=false; cs.style.opacity='1'; cs.style.cursor='pointer'; }
+    const reveal=this.$('vb-reveal'); if(reveal){ reveal.style.display='none'; reveal.classList.remove('vb-reveal-on'); }
   };
 
   // ───────── chrome ─────────
@@ -852,14 +886,15 @@ class Component extends DCLogic {
     this.$('vb-name').addEventListener('input',(e)=>syncName(e.target.value));
     this.$('vb-name-b').addEventListener('input',(e)=>syncName(e.target.value));
     this.$('vb-mantra').addEventListener('input',(e)=>{ this.centerMantra=e.target.value; });
-    this.$('vb-print').addEventListener('click',(e)=>{ e.stopPropagation(); this.doPrint('charts'); });
+    this.$('vb-print').addEventListener('click',(e)=>{ e.stopPropagation(); if(this.screen==='palace'){ const m=this.$('vb-print-menu'); m.style.display = (m.style.display==='block'?'none':'block'); } else { this.doPrint('charts'); } });
+    [...document.querySelectorAll('.vb-print-opt')].forEach(o=>o.addEventListener('click',(e)=>{ e.stopPropagation(); this.doPrint(o.dataset.pm); }));
+    document.addEventListener('click',()=>{ const m=this.$('vb-print-menu'); if(m) m.style.display='none'; });
     this.$('vb-finish').addEventListener('click',()=>this.showScreen('carry'));
     this.$('vb-carry-exit').addEventListener('click',()=>this.exitAndReset());
     this.$('vb-carry-back').addEventListener('click',()=>this.enterBoard());
     this.$('vb-howto-open').addEventListener('click',()=>{ this.$('vb-howto').style.display='flex'; });
     this.$('vb-howto-close').addEventListener('click',()=>{ this.$('vb-howto').style.display='none'; });
     this.$('vb-howto-bg').addEventListener('click',()=>{ this.$('vb-howto').style.display='none'; });
-    this.$('vb-reset').addEventListener('click',this.resetAll);
     this.$('vb-back').addEventListener('click',this.enterBoard);
     this.$('vb-fab').addEventListener('click',this.addTextBoxAtCenter);
     [...this.$('vb-toggle').children].forEach(b=>b.addEventListener('click',()=>this.switchView(b.dataset.mode)));
@@ -867,7 +902,6 @@ class Component extends DCLogic {
     this.$('vb-zout').addEventListener('click',()=>this.zoomBy(0.8));
     this.$('vb-zreset').addEventListener('click',this.fitView);
     const pr=this.$('vb-print'); pr.addEventListener('mouseenter',()=>pr.style.color=this.accent); pr.addEventListener('mouseleave',()=>pr.style.color='#1C1C1C');
-    const rs=this.$('vb-reset'); rs.addEventListener('mouseenter',()=>rs.style.color=this.accent); rs.addEventListener('mouseleave',()=>rs.style.color='#9A8F82');
   };
 
   // ───────── page 2 ─────────
@@ -965,12 +999,14 @@ class Component extends DCLogic {
   resetAll=()=>{ if(!confirm('Reset all notes and images?')) return; this.palaces.forEach(p=>{ this.canvasItems[p.id]=[]; }); this.centerName=''; this.centerMantra=''; this.$('vb-name').value=''; this.$('vb-mantra').value=''; this.$('vb-name-b').value=''; this.hoverId=null; this.boardBuilt&&this.boardMode!=='pi'&&this.buildBoardCards(this.boardMode); this.enterBoard(); };
 
   // ───────── print ─────────
-  doPrint = (mode) => { const menu=this.$('vb-print-menu'); if(menu) menu.style.display='none'; this.buildPrintDoc(mode); setTimeout(()=>window.print(), 80); };
+  doPrint = (mode) => { const m=this.$('vb-print-menu'); if(m) m.style.display='none'; this.buildPrintDoc(mode); setTimeout(()=>window.print(), 80); };
+
+  printFooter = () => { const f=document.createElement('div'); f.style.cssText='flex-shrink:0;text-align:center;padding:4px 0 14px;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#8A6A2F;'; f.textContent='pi-ziwei.com'; return f; };
 
   buildPrintDoc = (mode) => {
     const doc=this.$('vb-print-doc'); if(!doc) return; doc.innerHTML='';
-    const PW=1123, PH=794;
-    const titleBar=(label)=>`<div style="flex-shrink:0;display:flex;align-items:baseline;justify-content:space-between;padding:22px 36px 0;"><div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#1C1C1C;">${this.esc(this.centerName||'Your name')}</div><div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E;">${label}</div></div>`;
+    const PW=1587, PH=1123;
+    const titleBar=(label)=>`<div style="flex-shrink:0;display:flex;align-items:baseline;justify-content:space-between;padding:22px 36px 0;"><div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#1C1C1C;">${this.esc(this.centerName||'Your name')}</div><div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#8A6A2F;">${label}</div></div>`;
     const addBoardPage=(boardMode,label)=>{
       if(!this.boardBuilt){ this.buildMedallion(); this.boardBuilt=true; }
       this.buildBoardCards(boardMode); this.drawBoardConnectors();
@@ -983,10 +1019,11 @@ class Component extends DCLogic {
       const box=document.createElement('div'); box.style.cssText=`width:${1600*scale}px;height:${1000*scale}px;position:relative;`;
       clone.style.transform=`scale(${scale})`; clone.style.transformOrigin='top left';
       box.appendChild(clone); holder.appendChild(box);
-      page.innerHTML=titleBar(label); page.appendChild(holder);
+      page.innerHTML=titleBar(label); page.appendChild(holder); page.appendChild(this.printFooter());
       doc.appendChild(page);
     };
-    if(mode==='charts'||mode==='all'){ addBoardPage('text','The chart \u00b7 in words'); addBoardPage('visual','The chart \u00b7 in images'); }
+    if(mode==='charts'||mode==='all'){ addBoardPage('text','Pi Map \u00b7 In Words'); addBoardPage('visual','Pi Map \u00b7 In Visuals'); }
+    if(mode==='palace-current'){ const p=this.palaces.find(pp=>pp.id===this.currentPalaceId); if(p) doc.appendChild(this.renderPalacePrintPage(p,PW,PH)); }
     if(mode==='palaces'||mode==='all'){ this.palaces.forEach(p=>doc.appendChild(this.renderPalacePrintPage(p,PW,PH))); }
     if(this.screen==='board'){ this.buildBoardCards(this.boardMode); this.drawBoardConnectors(); }
   };
@@ -995,10 +1032,10 @@ class Component extends DCLogic {
     const page=document.createElement('div'); page.className='vb-print-page';
     const items=this.canvasItems[p.id];
     const headerH=112;
-    const header=`<div style="flex-shrink:0;padding:30px 44px 0;"><div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#C9A96E;margin-bottom:7px;">Palace</div><div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;"><div style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;color:#1C1C1C;">${this.esc(p.name)}</div>${p.theme?`<div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:#9A8F82;">${this.esc(p.theme)}</div>`:''}</div><div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:18px;color:#C9A96E;margin-top:9px;">I am grateful&hellip;</div></div>`;
-    const body=document.createElement('div'); body.style.cssText='flex:1;position:relative;margin:16px 44px 34px;border:0.5px solid #ECE5D9;background:#FDFBF8;overflow:hidden;';
+    const header=`<div style="flex-shrink:0;padding:30px 44px 0;"><div style="display:flex;align-items:baseline;gap:13px;flex-wrap:wrap;"><div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;">Palace</div><div style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;color:#1C1C1C;">${this.esc(p.name)}</div>${p.theme?`<div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:#6E635A;">${this.esc(p.theme)}</div>`:''}</div><div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:18px;color:#A97F1C;margin-top:9px;">I am grateful&hellip;</div></div>`;
+    const body=document.createElement('div'); body.style.cssText='flex:1;position:relative;margin:16px 44px 34px;border:0.5px solid #D9CFC0;background:#fff;overflow:hidden;';
     if(!items.length){
-      body.innerHTML='<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:18px;color:#C8BFAE;">This palace is still empty &mdash; a space waiting for you.</div>';
+      body.innerHTML='<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:18px;color:#8E8478;">This palace is still empty &mdash; a space waiting for you.</div>';
     } else {
       let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
       items.forEach(it=>{ minX=Math.min(minX,it.x); minY=Math.min(minY,it.y); maxX=Math.max(maxX,it.x+it.w); maxY=Math.max(maxY,it.y+it.h); });
@@ -1020,7 +1057,7 @@ class Component extends DCLogic {
         body.appendChild(el);
       });
     }
-    page.innerHTML=header; page.appendChild(body);
+    page.innerHTML=header; page.appendChild(body); page.appendChild(this.printFooter());
     return page;
   };
 }
