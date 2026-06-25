@@ -1,6 +1,6 @@
-# Zi Wei Vision Board
+# Pi Zi Wei Vision Board
 
-An interactive Zi Wei (Purple Star Astrology) vision board — a single-page web
+An interactive Zi Wei (Purple Star Astrology) vision board used the concept of Pi — a single-page web
 experience built around the 12 palaces, with editable name/mantra fields,
 animated backgrounds, palace detail views, and an A3 print/export layout.
 
