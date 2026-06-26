@@ -40,6 +40,23 @@
       .vb-print-page{width:420mm;height:297mm;page-break-after:always;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column;}
       .vb-print-page:last-child{page-break-after:auto;}
     }
+    /* ───── mobile redesign (palace page) ───── */
+    .vb-only-mobile{display:none;}
+    .vb-mp-item:hover,.vb-mmenu-item:hover{background:#FBF6E9;}
+    @media(max-width:768px){
+      #vb-root > header{padding:0 14px;}
+      #vb-logo{gap:9px !important;}
+      #vb-logo-pi{font-size:28px !important;}
+      #vb-logo-title{font-size:14px !important;letter-spacing:1px !important;}
+      #vb-sub{display:none !important;}
+      #vb-board-controls{display:none !important;}
+      #vb-switcher{display:none !important;}
+      #vb-mpwrap{display:block !important;}
+      #vb-palace-bar{padding:12px 16px 0 !important;}
+      .vb-only-desktop{display:none !important;}
+      .vb-only-mobile{display:block !important;}
+    }
+    @media(min-width:769px){ #vb-mmenu-wrap{display:none !important;} }
   </style>
 </helmet>
 <div id="vb-root" style="position:relative;width:100%;height:100vh;background:#F8F5F0;color:#1C1C1C;font-family:'Inter',sans-serif;font-weight:300;overflow:hidden;">
@@ -50,7 +67,7 @@
       <div id="vb-logo" style="display:flex;align-items:center;gap:16px;cursor:pointer;">
         <span id="vb-logo-pi" style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:500;color:#C9A96E;line-height:0.8;">&pi;</span>
         <div style="display:flex;flex-direction:column;gap:2px;">
-          <span style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;letter-spacing:1.5px;color:#1C1C1C;">Zi Wei Vision Board</span>
+          <span id="vb-logo-title" style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;letter-spacing:1.5px;color:#1C1C1C;">Zi Wei Vision Board</span>
           <span id="vb-sub" style="font-size:8.5px;letter-spacing:3.5px;color:#6E635A;text-transform:uppercase;">Your infinite possibility</span>
         </div>
       </div>
@@ -66,6 +83,13 @@
           </div>
         </div>
         <span id="vb-finish" style="cursor:pointer;font-weight:500;color:#A97F1C;">Complete &rarr;</span>
+      </div>
+      <div id="vb-mmenu-wrap" style="display:none;position:relative;">
+        <button id="vb-mmenu-btn" style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:#1C1C1C;font-size:22px;line-height:0;letter-spacing:1px;font-family:inherit;">&middot;&middot;&middot;</button>
+        <div id="vb-mmenu-pop" style="display:none;position:absolute;top:calc(100% + 10px);right:0;width:190px;background:#fff;border:0.5px solid #E0D9CE;box-shadow:0 18px 44px rgba(28,28,28,0.24);border-radius:6px;overflow:hidden;z-index:60;">
+          <button id="vb-mmenu-print" class="vb-mmenu-item" style="width:100%;display:flex;align-items:center;gap:11px;padding:14px 18px;background:none;border:none;border-bottom:0.5px solid #ECE5D9;cursor:pointer;text-align:left;font-family:inherit;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6E635A" stroke-width="1.4"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#1C1C1C;">Print board</span></button>
+          <button id="vb-mmenu-complete" class="vb-mmenu-item" style="width:100%;display:flex;align-items:center;gap:11px;padding:14px 18px;background:none;border:none;cursor:pointer;text-align:left;font-family:inherit;"><span style="color:#A97F1C;font-size:14px;width:15px;display:flex;justify-content:center;">&rarr;</span><span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#A97F1C;font-weight:500;">Complete</span></button>
+        </div>
       </div>
     </div>
   </header>
@@ -120,7 +144,7 @@
 
           <div>
             <div style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#6E635A;margin-bottom:12px;">Your palace</div>
-            <div style="position:relative;background:#FDFBF8;border:0.5px solid #E0D9CE;border-radius:3px;box-shadow:0 10px 30px rgba(28,28,28,0.06);height:340px;overflow:hidden;background-image:linear-gradient(rgba(0,0,0,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.022) 1px,transparent 1px);background-size:24px 24px;">
+            <div class="vb-only-desktop" style="position:relative;background:#FDFBF8;border:0.5px solid #E0D9CE;border-radius:3px;box-shadow:0 10px 30px rgba(28,28,28,0.06);height:340px;overflow:hidden;background-image:linear-gradient(rgba(0,0,0,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.022) 1px,transparent 1px);background-size:24px 24px;">
               <div style="position:absolute;top:18px;left:20px;z-index:6;">
                 <div style="display:flex;align-items:center;gap:7px;margin-bottom:6px;">
                   <span style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#8A6A2F;">Palace</span>
@@ -137,6 +161,21 @@
               <div style="position:absolute;top:158px;left:46px;width:150px;background:#FBF6E9;border:0.5px solid #E0CDA0;box-shadow:0 4px 12px rgba(28,28,28,0.07);padding:9px 12px 9px 16px;font-size:10.5px;line-height:1.4;color:#5A5248;transform:rotate(1.5deg);"><span style="position:absolute;left:6px;top:9px;color:#C9A96E;font-size:8px;">&#10023;</span>&hellip;to laugh with my partner every day</div>
               <div style="position:absolute;top:244px;left:22px;width:156px;background:#FBF6E9;border:0.5px solid #E0CDA0;box-shadow:0 4px 12px rgba(28,28,28,0.07);padding:9px 12px 9px 16px;font-size:10.5px;line-height:1.4;color:#5A5248;transform:rotate(-1.5deg);"><span style="position:absolute;left:6px;top:9px;color:#C9A96E;font-size:8px;">&#10023;</span>&hellip;to see him getting motivated day by day</div>
               <div style="position:absolute;top:150px;left:208px;width:162px;background:#fff;border:0.5px solid #E0D9CE;box-shadow:0 3px 10px rgba(28,28,28,0.05);padding:9px 12px 9px 16px;font-size:10.5px;line-height:1.4;color:#8A8276;transform:rotate(1.5deg);"><span style="position:absolute;left:6px;top:9px;color:#8E8478;font-size:8px;">&#10023;</span>&hellip;slow mornings: coffee and sun through the window</div>
+            </div>
+            <div class="vb-only-mobile" style="position:relative;background:#FDFBF8;border:0.5px solid #E0D9CE;border-radius:3px;box-shadow:0 10px 30px rgba(28,28,28,0.06);padding:18px 16px 22px;overflow:hidden;background-image:linear-gradient(rgba(0,0,0,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.02) 1px,transparent 1px);background-size:24px 24px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#8A6A2F;">Palace</span><span style="font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:#1C1C1C;font-weight:600;background:rgba(201,169,110,0.24);padding:3px 7px;border-bottom:1.5px solid #C9A96E;">Relationship</span></div>
+              <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:17px;color:#A97F1C;margin-bottom:16px;">I am grateful&hellip;</div>
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="flex:1;display:flex;flex-direction:column;gap:12px;min-width:0;">
+                  <div style="position:relative;background:#FBF6E9;border:0.5px solid #E0CDA0;box-shadow:0 4px 12px rgba(28,28,28,0.07);padding:10px 12px 10px 19px;font-size:11.5px;line-height:1.4;color:#5A5248;transform:rotate(-2deg);"><span style="position:absolute;left:6px;top:10px;color:#C9A96E;font-size:8px;">&#10023;</span>&hellip;to become a better version of myself</div>
+                  <div style="position:relative;background:#FBF6E9;border:0.5px solid #E0CDA0;box-shadow:0 4px 12px rgba(28,28,28,0.07);padding:10px 12px 10px 19px;font-size:11.5px;line-height:1.4;color:#5A5248;transform:rotate(1.5deg);margin-left:10px;"><span style="position:absolute;left:6px;top:10px;color:#C9A96E;font-size:8px;">&#10023;</span>&hellip;to laugh with my partner every day</div>
+                  <div style="position:relative;background:#FBF6E9;border:0.5px solid #E0CDA0;box-shadow:0 4px 12px rgba(28,28,28,0.07);padding:10px 12px 10px 19px;font-size:11.5px;line-height:1.4;color:#5A5248;transform:rotate(-1.5deg);"><span style="position:absolute;left:6px;top:10px;color:#C9A96E;font-size:8px;">&#10023;</span>&hellip;to see him getting motivated day by day</div>
+                </div>
+                <div style="width:108px;flex-shrink:0;display:flex;flex-direction:column;gap:14px;">
+                  <div style="position:relative;height:84px;background:#EEE7DA;border:0.5px solid #D9C9A0;display:flex;align-items:center;justify-content:center;transform:rotate(2deg);box-shadow:0 6px 16px rgba(28,28,28,0.1);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span style="position:absolute;bottom:-15px;left:0;right:0;text-align:center;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:#8A6A2F;">&#10023; Hero</span></div>
+                  <div style="position:relative;background:#fff;border:0.5px solid #E0D9CE;box-shadow:0 3px 10px rgba(28,28,28,0.05);padding:10px 11px 10px 18px;font-size:11px;line-height:1.4;color:#8A8276;transform:rotate(1.5deg);margin-top:8px;"><span style="position:absolute;left:6px;top:10px;color:#8E8478;font-size:8px;">&#10023;</span>&hellip;slow mornings: coffee and sun through the window</div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -297,6 +336,13 @@
   <!-- ══════════ PALACE (page 2) ══════════ -->
   <section id="vb-palace" style="display:none;flex-direction:column;height:calc(100% - 64px);position:relative;z-index:5;">
     <div id="vb-palace-bar" style="padding:16px 28px 0;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+      <div id="vb-mpwrap" style="display:none;position:relative;flex-shrink:0;">
+        <button id="vb-mpill" style="display:flex;align-items:baseline;gap:9px;background:#fff;border:0.5px solid #C9A96E;padding:8px 16px;border-radius:30px;cursor:pointer;box-shadow:0 2px 10px rgba(201,169,110,0.14);font-family:inherit;"><span style="font-size:8px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#8A6A2F;">Palace</span><span id="vb-mpill-name" style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:19px;color:#1C1C1C;">Persona</span><span id="vb-mpill-caret" style="color:#C9A96E;font-size:11px;display:inline-block;transition:transform 0.18s;">&#9662;</span></button>
+        <div id="vb-mpdrop" style="display:none;position:absolute;top:calc(100% + 8px);left:0;width:248px;max-width:78vw;background:#FDFBF8;border:0.5px solid #E0D9CE;box-shadow:0 18px 44px rgba(28,28,28,0.2);border-radius:6px;overflow:hidden;z-index:40;">
+          <div style="padding:11px 20px 9px;border-bottom:0.5px solid #ECE5D9;"><span style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#8A6A2F;">Your 12 palaces</span></div>
+          <div id="vb-mpdrop-list" style="max-height:60vh;overflow-y:auto;"></div>
+        </div>
+      </div>
       <div id="vb-switcher" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
       <button id="vb-howto-open" style="flex-shrink:0;display:flex;align-items:center;gap:7px;background:#fff;border:0.5px solid #C9A96E;color:#1C1C1C;cursor:pointer;font-family:inherit;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 14px;white-space:nowrap;"><span style="font-family:'Cormorant Garamond',serif;font-size:14px;color:#C9A96E;line-height:0.7;">&#10023;</span> How to write</button>
     </div>
@@ -337,7 +383,8 @@
         <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:18px;">Get in touch</div>
         <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(17px,2.2vw,21px);line-height:1.6;color:#2A2620;text-align:left;">The possibilities within the intersection of &pi; and Zi Wei are endless. I am actively evolving this vision board, expanding its features to better serve the overarching concept of self-reflection and improvement. Your advice and feedback would be invaluable to me as I develop this further. Thank you for your time and your giving.</p>
       </div>
-      <form id="vb-contact-form" style="display:flex;flex-direction:column;gap:22px;">
+      <form id="vb-contact-form" action="https://formspree.io/f/mpqgqvbn" method="POST" style="display:flex;flex-direction:column;gap:22px;">
+        <input type="hidden" name="_subject" value="New message from pi-ziwei.com"/>
         <label style="display:flex;flex-direction:column;gap:8px;">
           <span style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#6E635A;">Name</span>
           <input type="text" name="name" style="border:none;border-bottom:1px solid #D9D0C2;background:transparent;outline:none;font-family:inherit;font-size:15px;color:#1C1C1C;padding:8px 2px;"/>
@@ -506,6 +553,7 @@ class Component extends DCLogic {
     this.initFreeCanvas();
     this.initCanvasZoom();
     this.initPanZoom();
+    this.initMobileUI();
     this.$('vb-amount').value = (Math.random()*(99.99-3.14) + 3.14).toFixed(2);
 
     let paid=false; try{ paid = sessionStorage.getItem('vb_paid')==='1'; }catch(e){}
@@ -545,6 +593,7 @@ class Component extends DCLogic {
     this.$('vb-back').style.display = name==='palace'?'flex':'none';
     const onBoard = (name==='board'||name==='palace');
     this.$('vb-board-controls').style.display = onBoard?'flex':'none';
+    { const mm=this.$('vb-mmenu-wrap'); if(mm) mm.style.display = onBoard?'flex':'none'; const mp=this.$('vb-mmenu-pop'); if(mp) mp.style.display='none'; }
     this.$('vb-logo').style.cursor = name==='home'?'pointer':'default';
     this.$('vb-enter-link').style.display = name==='home'?'inline':'none';
     this.$('vb-sub').textContent = (name==='palace'&&this.currentPalaceId)? this.palaces.find(p=>p.id===this.currentPalaceId).name : 'Your infinite possibility';
@@ -847,7 +896,7 @@ class Component extends DCLogic {
     this.$('vb-zw-link').addEventListener('click',()=>{ this.showScreen('zwabout'); this.$('vb-zwabout').scrollTo(0,0); });
     this.$('vb-zw-link2').addEventListener('click',()=>{ this.showScreen('zwabout'); this.$('vb-zwabout').scrollTo(0,0); });
     this.$('vb-zw-home').addEventListener('click',()=>this.goHome());
-    this.$('vb-contact-form').addEventListener('submit',(e)=>{ e.preventDefault(); this.$('vb-contact-sent').style.display='inline'; e.target.reset(); });
+    this.$('vb-contact-form').addEventListener('submit',(e)=>{ e.preventDefault(); const f=e.target; const sent=this.$('vb-contact-sent'); fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(()=>{ sent.style.display='inline'; f.reset(); }).catch(()=>{ sent.style.display='inline'; f.reset(); }); });
   };
   scrollToOffering=()=>{ const home=this.$('vb-home'), t=this.$('vb-offering'); home.scrollTo({top:t.offsetTop-40,behavior:'smooth'}); };
   setCurrency=(c)=>{ this.currency=c; this.$('vb-cur-sym').textContent=c==='USD'?'$':'\u20ac'; const s=this.$('vb-cur-select'); if(s&&s.value!==c) s.value=c; };
@@ -939,8 +988,26 @@ class Component extends DCLogic {
 
   // ───────── page 2 ─────────
   buildSwitcher=(currentId)=>{ const wrap=this.$('vb-switcher'); wrap.innerHTML=''; this.palaces.forEach(p=>{ const pill=document.createElement('button'); const cur=p.id===currentId; pill.style.cssText=`font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;cursor:pointer;white-space:nowrap;font-family:inherit;transition:all 0.15s;border:0.5px solid ${cur?'#1C1C1C':'#E0D9CE'};background:${cur?'#1C1C1C':'#fff'};color:${cur?'#fff':'#9A8F82'};`; pill.textContent=p.name; pill.onclick=()=>this.openPalace(p.id); wrap.appendChild(pill); }); };
-  openPalace=(id)=>{ this.currentPalaceId=id; const p=this.palaces.find(pp=>pp.id===id); this.showScreen('palace'); this.$('vb-pal-title').textContent=p.name; this.$('vb-pal-theme').textContent=p.theme||''; this.$('vb-pal-theme').style.display=p.theme?'block':'none'; this.buildSwitcher(id); this.renderFreeCanvas(id); this.setupCanvasMode(); };
+  openPalace=(id)=>{ this.currentPalaceId=id; const p=this.palaces.find(pp=>pp.id===id); this.showScreen('palace'); this.$('vb-pal-title').textContent=p.name; this.$('vb-pal-theme').textContent=p.theme||''; this.$('vb-pal-theme').style.display=p.theme?'block':'none'; this.buildSwitcher(id); this.buildMobilePalace(id); this.renderFreeCanvas(id); this.setupCanvasMode(); };
 
+  buildMobilePalace=(currentId)=>{
+    const cur=this.palaces.find(p=>p.id===currentId); const nameEl=this.$('vb-mpill-name'); if(nameEl&&cur) nameEl.textContent=cur.name;
+    const list=this.$('vb-mpdrop-list'); if(!list) return; list.innerHTML='';
+    this.palaces.forEach(p=>{ const on=p.id===currentId; const row=document.createElement('button'); row.className='vb-mp-item';
+      row.style.cssText=`width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;background:${on?'rgba(201,169,110,0.18)':'transparent'};border:none;border-left:3px solid ${on?'#C9A96E':'transparent'};cursor:pointer;text-align:left;font-family:inherit;`;
+      row.innerHTML=`<span style="font-family:'Cormorant Garamond',serif;font-weight:${on?'600':'400'};font-size:18px;color:#1C1C1C;">${p.name}</span><span style="font-family:'Cormorant Garamond',serif;font-size:14px;color:${on?'#A97F1C':'#B8AFA2'};">${p.zh}</span>`;
+      row.onclick=()=>{ const d=this.$('vb-mpdrop'); if(d) d.style.display='none'; const c=this.$('vb-mpill-caret'); if(c) c.style.transform='none'; this.openPalace(p.id); };
+      list.appendChild(row); });
+  };
+  initMobileUI=()=>{
+    const pill=this.$('vb-mpill'), drop=this.$('vb-mpdrop'), caret=this.$('vb-mpill-caret');
+    if(pill&&drop){ pill.addEventListener('click',(e)=>{ e.stopPropagation(); const open=drop.style.display==='block'; drop.style.display=open?'none':'block'; if(caret) caret.style.transform=open?'none':'rotate(180deg)'; }); }
+    const mb=this.$('vb-mmenu-btn'), mp=this.$('vb-mmenu-pop');
+    if(mb&&mp){ mb.addEventListener('click',(e)=>{ e.stopPropagation(); mp.style.display = mp.style.display==='block'?'none':'block'; });
+      const pr=this.$('vb-mmenu-print'); if(pr) pr.addEventListener('click',(e)=>{ e.stopPropagation(); mp.style.display='none'; this.doPrint(this.screen==='palace'?'palace-current':'palaces'); });
+      const cp=this.$('vb-mmenu-complete'); if(cp) cp.addEventListener('click',(e)=>{ e.stopPropagation(); mp.style.display='none'; this.showScreen('carry'); }); }
+    document.addEventListener('click',()=>{ if(drop) drop.style.display='none'; if(caret) caret.style.transform='none'; if(mp) mp.style.display='none'; });
+  };
   renderFreeCanvas=(id)=>{ const c=this.$('vb-canvas-stage'); [...c.querySelectorAll('.vb-free')].forEach(n=>n.remove()); this.selectedEl=null; this.canvasItems[id].forEach(r=>r.type==='text'?this.addTextEl(r):this.addImageEl(r)); this.updateHint(id); };
   updateHint=(id)=>{ const h=this.$('vb-canvas-hint'); if(!h) return; h.style.display='flex'; h.style.opacity=this.canvasItems[id].length?'0.4':'1'; };
   addTextBoxAtCenter=()=>{ const c=this.$('vb-canvas'); const r=c.getBoundingClientRect(); const ctr=this.screenToStage(r.left+r.width/2, r.top+r.height*0.38); const rec={type:'text',id:'t'+(++this.zCounter),x:ctr.x-90,y:ctr.y-26,w:188,h:52,z:this.zCounter,content:''}; this.canvasItems[this.currentPalaceId].push(rec); const el=this.addTextEl(rec); this.updateHint(this.currentPalaceId); this.selectEl(el); (el._body||el).focus(); };
