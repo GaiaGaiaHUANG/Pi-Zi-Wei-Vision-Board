@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
   <script src="./pi-digits.js"></script>
-  <script id="vb-paypal-sdk" src="https://www.paypal.com/sdk/js?client-id=AYFQzGE7vgz69aFyLahejG1ORH2bsG4QnTWxXQg44WvM1brmziABzuQ3SoDHEQ6R05UIYSdFeO9BWW-y&currency=USD&intent=capture"></script>
+  <script id="vb-paypal-sdk" src="https://www.paypal.com/sdk/js?client-id=AdtXBuhHamtBNhB6Bq9Fk0GzNo9-Mc7lh9FEzp62HxbBsYKbW19yilCTaik_wWHxpkQHYznQpWS6R7eT&currency=USD&intent=capture"></script>
   <style>
     summary::-webkit-details-marker{display:none;}
     *{box-sizing:border-box;}
@@ -632,7 +632,7 @@ class Component extends DCLogic {
       }).render(box);
     };
     const sdk=this.$('vb-paypal-sdk');
-    const wantSrc=`https://www.paypal.com/sdk/js?client-id=AYFQzGE7vgz69aFyLahejG1ORH2bsG4QnTWxXQg44WvM1brmziABzuQ3SoDHEQ6R05UIYSdFeO9BWW-y&currency=${this.currency}&intent=capture`;
+    const wantSrc=`https://www.paypal.com/sdk/js?client-id=AdtXBuhHamtBNhB6Bq9Fk0GzNo9-Mc7lh9FEzp62HxbBsYKbW19yilCTaik_wWHxpkQHYznQpWS6R7eT&currency=${this.currency}&intent=capture`;
     if(window.paypal && sdk.dataset.cur===this.currency){ run(); return; }
     const next=document.createElement('script'); next.id='vb-paypal-sdk'; next.src=wantSrc; next.dataset.cur=this.currency;
     next.onload=run;
