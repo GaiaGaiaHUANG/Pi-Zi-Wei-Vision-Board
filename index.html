@@ -250,7 +250,6 @@
           <button id="vb-pay" style="display:none;background:#C9A96E;color:#1C1C1C;border:none;cursor:pointer;font-family:inherit;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;padding:16px 38px;font-weight:500;">Give &amp; enter &rarr;</button>
           <div id="vb-pay-label" style="font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:#8A6A2F;margin-bottom:14px;"></div>
           <div id="vb-paypal-container" style="max-width:260px;margin:0 auto;"></div>
-          <div style="margin-top:16px;font-size:10px;letter-spacing:0.5px;color:#8E8478;">A gentle demo &mdash; no real charge yet.</div>
           <div style="max-width:460px;margin:22px auto 0;">
             <details style="border:0.5px solid #E0D9CE;background:#FCFAF6;text-align:left;">
               <summary style="list-style:none;cursor:pointer;padding:13px 18px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#6E665C;">An important reminder <span style="font-size:7px;">&#9662;</span></summary>
@@ -447,14 +446,14 @@
     <div style="position:relative;width:min(444px,100%);max-height:88vh;overflow-y:auto;background:#FDFBF8;border:0.5px solid #E0D9CE;box-shadow:0 24px 70px rgba(28,28,28,0.26);padding:36px 36px 32px;">
       <button id="vb-howto-close" style="position:absolute;top:16px;right:16px;width:26px;height:26px;border:none;background:none;cursor:pointer;color:#6E635A;font-size:16px;font-family:inherit;line-height:1;">&#10005;</button>
       <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:8px;">How to write</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:24px;color:#1C1C1C;margin-bottom:22px;">Write as if it already exists.</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:24px;color:#1C1C1C;margin-bottom:22px;">Describe the <em>feeling</em> of having what you desire.</div>
       <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6E635A;margin-bottom:14px;">For example &middot; Relationship</div>
       <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
-        <div style="background:#FBF6E9;border:0.5px solid #E0CDA0;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.5;color:#4A4339;">&ldquo;&hellip;to become a better version of myself&rdquo;</div>
-        <div style="background:#FBF6E9;border:0.5px solid #E0CDA0;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.5;color:#4A4339;">&ldquo;&hellip;to laugh with my partner every day&rdquo;</div>
-        <div style="background:#FBF6E9;border:0.5px solid #E0CDA0;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.5;color:#4A4339;">&ldquo;&hellip;to see him getting motivated day by day&rdquo;</div>
+        <div style="background:#FBF6E9;border:0.5px solid #E0CDA0;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.5;color:#4A4339;">&ldquo;I am a better version of myself&rdquo;</div>
+        <div style="background:#FBF6E9;border:0.5px solid #E0CDA0;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.5;color:#4A4339;">&ldquo;I laugh with my partner every day&rdquo;</div>
+        <div style="background:#FBF6E9;border:0.5px solid #E0CDA0;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.5;color:#4A4339;">&ldquo;I see him getting motivated day by day&rdquo;</div>
       </div>
-      <p style="font-size:13.5px;line-height:1.7;color:#6E665C;margin:0;padding-top:20px;border-top:0.5px solid #ECE5D9;">Describe the <em>feeling</em> of having what you desire.</p>
+      <p style="font-size:13.5px;line-height:1.7;color:#6E665C;margin:0;padding-top:20px;border-top:0.5px solid #ECE5D9;">Write as if it already exists.</p>
     </div>
   </div>
 
@@ -1010,7 +1009,7 @@ class Component extends DCLogic {
   };
   renderFreeCanvas=(id)=>{ const c=this.$('vb-canvas-stage'); [...c.querySelectorAll('.vb-free')].forEach(n=>n.remove()); this.selectedEl=null; this.canvasItems[id].forEach(r=>r.type==='text'?this.addTextEl(r):this.addImageEl(r)); this.updateHint(id); };
   updateHint=(id)=>{ const h=this.$('vb-canvas-hint'); if(!h) return; h.style.display='flex'; h.style.opacity=this.canvasItems[id].length?'0.4':'1'; };
-  addTextBoxAtCenter=()=>{ const c=this.$('vb-canvas'); const r=c.getBoundingClientRect(); const ctr=this.screenToStage(r.left+r.width/2, r.top+r.height*0.38); const rec={type:'text',id:'t'+(++this.zCounter),x:ctr.x-90,y:ctr.y-26,w:188,h:52,z:this.zCounter,content:''}; this.canvasItems[this.currentPalaceId].push(rec); const el=this.addTextEl(rec); this.updateHint(this.currentPalaceId); this.selectEl(el); (el._body||el).focus(); };
+  addTextBoxAtCenter=()=>{ const c=this.$('vb-canvas'); const r=c.getBoundingClientRect(); const ctr=this.screenToStage(r.left+r.width/2, r.top+r.height*0.38); const rec={type:'text',id:'t'+(++this.zCounter),x:ctr.x-90,y:ctr.y-26,w:188,h:52,z:this.zCounter,content:''}; this.canvasItems[this.currentPalaceId].push(rec); const el=this.addTextEl(rec); this.updateHint(this.currentPalaceId); this.selectEl(el); (el._body||el).focus({preventScroll:true}); };
 
   noteToolbar=(opts)=>{
     const tb=document.createElement('div'); tb.className='vb-toolbar'; tb.style.cssText='position:absolute;top:-30px;left:0;display:none;gap:4px;background:#fff;border:0.5px solid #E0D9CE;box-shadow:0 3px 10px rgba(28,28,28,0.1);padding:3px;';
@@ -1079,14 +1078,14 @@ class Component extends DCLogic {
   startDrag=(e,wrap,rec)=>{ e.preventDefault(); const sx=e.clientX,sy=e.clientY,ox=rec.x,oy=rec.y; const s=()=>this.cMode?this.cScale:1; const m=(ev)=>{ rec.x=ox+(ev.clientX-sx)/s(); rec.y=oy+(ev.clientY-sy)/s(); wrap.style.left=rec.x+'px'; wrap.style.top=rec.y+'px'; }; const u=()=>{ window.removeEventListener('pointermove',m); window.removeEventListener('pointerup',u); }; window.addEventListener('pointermove',m); window.addEventListener('pointerup',u); };
   startResizeBox=(e,wrap,rec,dir)=>{ e.preventDefault(); e.stopPropagation(); const sx=e.clientX,sy=e.clientY,ow=rec.w,oh=rec.h; const s=()=>this.cMode?this.cScale:1; const m=(ev)=>{ if(dir!=='y'){ rec.w=Math.max(80,ow+(ev.clientX-sx)/s()); wrap.style.width=rec.w+'px'; } if(dir!=='x'){ rec.h=Math.max(34,oh+(ev.clientY-sy)/s()); wrap.style.minHeight=rec.h+'px'; } }; const u=()=>{ window.removeEventListener('pointermove',m); window.removeEventListener('pointerup',u); }; window.addEventListener('pointermove',m); window.addEventListener('pointerup',u); };
   startFontScale=(e,wrap,rec)=>{ e.preventDefault(); e.stopPropagation(); const sx=e.clientX,sy=e.clientY,baseFont=rec.fontPx||12; const s=()=>this.cMode?this.cScale:1; const m=(ev)=>{ const delta=(((ev.clientX-sx)+(ev.clientY-sy))/2)/s(); rec.fontPx=Math.max(8,Math.min(64,baseFont+delta/4)); wrap.style.fontSize=rec.fontPx+'px'; }; const u=()=>{ window.removeEventListener('pointermove',m); window.removeEventListener('pointerup',u); }; window.addEventListener('pointermove',m); window.addEventListener('pointerup',u); };
-  startDragText=(e,wrap,rec,body)=>{ const sx=e.clientX,sy=e.clientY,ox=rec.x,oy=rec.y; const s=()=>this.cMode?this.cScale:1; let dr=false; const m=(ev)=>{ const dx=ev.clientX-sx,dy=ev.clientY-sy; if(!dr&&Math.hypot(dx,dy)>4){ dr=true; body.contentEditable='false'; wrap.style.cursor='grabbing'; } if(dr){ ev.preventDefault(); rec.x=ox+dx/s(); rec.y=oy+dy/s(); wrap.style.left=rec.x+'px'; wrap.style.top=rec.y+'px'; } }; const u=()=>{ window.removeEventListener('pointermove',m); window.removeEventListener('pointerup',u); wrap.style.cursor='move'; if(dr){ body.contentEditable='true'; } else { body.focus(); } }; window.addEventListener('pointermove',m); window.addEventListener('pointerup',u); };
+  startDragText=(e,wrap,rec,body)=>{ const sx=e.clientX,sy=e.clientY,ox=rec.x,oy=rec.y; const s=()=>this.cMode?this.cScale:1; let dr=false; const m=(ev)=>{ const dx=ev.clientX-sx,dy=ev.clientY-sy; if(!dr&&Math.hypot(dx,dy)>4){ dr=true; body.contentEditable='false'; wrap.style.cursor='grabbing'; } if(dr){ ev.preventDefault(); rec.x=ox+dx/s(); rec.y=oy+dy/s(); wrap.style.left=rec.x+'px'; wrap.style.top=rec.y+'px'; } }; const u=()=>{ window.removeEventListener('pointermove',m); window.removeEventListener('pointerup',u); wrap.style.cursor='move'; if(dr){ body.contentEditable='true'; } else { body.focus({preventScroll:true}); } }; window.addEventListener('pointermove',m); window.addEventListener('pointerup',u); };
   startResize=(e,wrap,rec)=>{ e.preventDefault(); e.stopPropagation(); const sx=e.clientX,sy=e.clientY,ow=rec.w,oh=rec.h; const s=()=>this.cMode?this.cScale:1; const m=(ev)=>{ rec.w=Math.max(80,ow+(ev.clientX-sx)/s()); rec.h=Math.max(40,oh+(ev.clientY-sy)/s()); wrap.style.width=rec.w+'px'; wrap.style.height=rec.h+'px'; }; const u=()=>{ window.removeEventListener('pointermove',m); window.removeEventListener('pointerup',u); }; window.addEventListener('pointermove',m); window.addEventListener('pointerup',u); };
 
-  pasteImageData=(dataUrl)=>{ const rec={type:'image',id:'i'+(++this.zCounter),x:60+Math.random()*60,y:60+Math.random()*60,w:240,h:180,z:this.zCounter,content:dataUrl,hero:false}; this.canvasItems[this.currentPalaceId].push(rec); const el=this.addImageEl(rec); this.updateHint(this.currentPalaceId); this.selectEl(el); };
+  pasteImageData=(dataUrl)=>{ const c=this.$('vb-canvas'); const r=c.getBoundingClientRect(); const ctr=this.screenToStage(r.left+r.width/2, r.top+r.height*0.42); const jx=Math.random()*40-20, jy=Math.random()*40-20; const rec={type:'image',id:'i'+(++this.zCounter),x:ctr.x-120+jx,y:ctr.y-90+jy,w:240,h:180,z:this.zCounter,content:dataUrl,hero:false}; this.canvasItems[this.currentPalaceId].push(rec); const el=this.addImageEl(rec); this.updateHint(this.currentPalaceId); this.selectEl(el); };
   initFreeCanvas=()=>{
     const canvas=this.$('vb-canvas');
     canvas.addEventListener('pointerdown',(e)=>{ if(!e.target.closest('.vb-free')&&!e.target.closest('#vb-canvas-zoom')&&!e.target.closest('#vb-upload')&&!e.target.closest('#vb-fab')) this.deselect(); });
-    canvas.addEventListener('dblclick',(e)=>{ if(e.target!==canvas) return; const r=canvas.getBoundingClientRect(); const rec={type:'text',id:'t'+(++this.zCounter),x:e.clientX-r.left-90,y:e.clientY-r.top-26,w:188,h:52,z:this.zCounter,content:''}; this.canvasItems[this.currentPalaceId].push(rec); const el=this.addTextEl(rec); this.updateHint(this.currentPalaceId); this.selectEl(el); el._body.focus(); });
+    canvas.addEventListener('dblclick',(e)=>{ if(e.target!==canvas&&e.target!==this.$('vb-canvas-stage')) return; const ctr=this.screenToStage(e.clientX, e.clientY); const rec={type:'text',id:'t'+(++this.zCounter),x:ctr.x-90,y:ctr.y-26,w:188,h:52,z:this.zCounter,content:''}; this.canvasItems[this.currentPalaceId].push(rec); const el=this.addTextEl(rec); this.updateHint(this.currentPalaceId); this.selectEl(el); el._body.focus({preventScroll:true}); });
     canvas.addEventListener('paste',(e)=>{ const items=e.clipboardData?.items; if(!items) return; for(const it of items){ if(it.type.startsWith('image/')){ const f=it.getAsFile(); if(f){ const rd=new FileReader(); rd.onload=(ev)=>this.pasteImageData(ev.target.result); rd.readAsDataURL(f); } e.preventDefault(); break; } } });
     canvas.addEventListener('dragover',(e)=>e.preventDefault());
     canvas.addEventListener('drop',(e)=>{ e.preventDefault(); const f=e.dataTransfer?.files?.[0]; if(f&&f.type.startsWith('image/')){ const rd=new FileReader(); rd.onload=(ev)=>this.pasteImageData(ev.target.result); rd.readAsDataURL(f); } });
@@ -1118,7 +1117,7 @@ class Component extends DCLogic {
       this.resetCanvasView();
     } else {
       this.cMode=false; this.cScale=1; this.cPanX=0; this.cPanY=0;
-      st.style.transform=''; st.style.inset='0'; st.style.width=''; st.style.height=''; st.style.left=''; st.style.top='';
+      st.style.transform=''; st.style.width=''; st.style.height=''; st.style.left=''; st.style.top=''; st.style.right=''; st.style.bottom=''; st.style.inset='0';
       c.style.touchAction='';
       if(zc) zc.style.display='none';
       if(hintSpan) hintSpan.innerHTML='Click anywhere to add a note \u00b7 screenshot or copy an image, then paste (\u2318 / Ctrl + V)';
