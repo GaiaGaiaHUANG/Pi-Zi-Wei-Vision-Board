@@ -14,7 +14,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
   <script src="./pi-digits.js"></script>
-  <script id="vb-paypal-sdk" src="https://www.paypal.com/sdk/js?client-id=AYFQzGE7vgz69aFyLahejG1ORH2bsG4QnTWxXQg44WvM1brmziABzuQ3SoDHEQ6R05UIYSdFeO9BWW-y&currency=USD&intent=capture"></script>
   <style>
     summary::-webkit-details-marker{display:none;}
     *{box-sizing:border-box;}
@@ -126,8 +125,8 @@
     <!-- A LOOK INSIDE -->
     <div style="border-bottom:0.5px solid #E0D9CE;">
       <div style="max-width:1100px;margin:0 auto;padding:92px 32px;">
-        <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:14px;text-align:center;">A look inside</div>
-        <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(20px,2.5vw,27px);line-height:1.45;color:#2A2620;text-align:center;max-width:680px;margin:0 auto 52px;">How your board looks &mdash; filled with your own words and visuals.</p>
+        <div style="font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#8A6A2F;margin-bottom:14px;text-align:center;">What you get</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(20px,2.5vw,27px);line-height:1.45;color:#2A2620;text-align:center;max-width:680px;margin:0 auto 52px;">A one-time vision board template &mdash; two maps, and 12 individual boards for your 12 palaces.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:34px;">
 
           <div>
@@ -180,6 +179,9 @@
                 </div>
               </div>
             </div>
+            <div style="margin-top:14px;">
+              <span style="font-size:11px;line-height:1.5;color:#8A8276;">Your 12 palaces, each opening into its own board &mdash; yours to fill in words and images.</span>
+            </div>
           </div>
 
         </div>
@@ -231,13 +233,6 @@
 
         <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
           <div style="display:flex;align-items:flex-end;gap:12px;">
-            <div style="display:flex;align-items:center;position:relative;margin-bottom:12px;">
-              <select id="vb-cur-select" style="appearance:none;-webkit-appearance:none;border:0.5px solid #E0D9CE;background:#fff;color:#6E665C;font-family:inherit;font-size:10px;letter-spacing:0.5px;padding:6px 22px 6px 9px;cursor:pointer;border-radius:2px;">
-                <option value="USD">$ USD</option>
-                <option value="EUR">&euro; EUR</option>
-              </select>
-              <span style="position:absolute;right:8px;font-size:7px;color:#6E635A;pointer-events:none;">&#9660;</span>
-            </div>
             <div style="display:flex;align-items:flex-end;gap:6px;border-bottom:1.5px solid #C9A96E;padding:0 4px 8px;">
               <span id="vb-cur-sym" style="font-family:'Cormorant Garamond',serif;font-size:38px;color:#C9A96E;line-height:1;">$</span>
               <input id="vb-amount" type="number" min="3.14" max="99.99" step="0.01" inputmode="decimal" placeholder="3.14" style="width:190px;border:none;outline:none;background:transparent;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:52px;color:#1C1C1C;text-align:center;line-height:1;"/>
@@ -356,7 +351,7 @@
             <div style="font-size:10px;font-weight:500;letter-spacing:4px;color:#8A6A2F;text-transform:uppercase;">Palace</div>
             <div id="vb-pal-title" style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:26px;letter-spacing:0.5px;color:#1C1C1C;">Title</div>
           </div>
-          <div id="vb-pal-theme" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#5A5248;margin-top:7px;"></div>
+          <div id="vb-pal-theme" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:#5A5248;margin-top:7px;"></div>
           <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:19px;color:#A97F1C;margin-top:14px;">I am grateful&hellip;</div>
         </div>
         <div id="vb-canvas-hint" style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:#8E8478;font-size:10.5px;letter-spacing:1px;text-align:center;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:8px;">
@@ -558,15 +553,27 @@ class Component extends DCLogic {
     this.initMobileUI();
     this.$('vb-amount').value = (Math.random()*(99.99-3.14) + 3.14).toFixed(2);
 
+    let justPaid=false;
+    try{
+      const qp=new URLSearchParams(window.location.search);
+      if(qp.get('paid')==='1'){
+        justPaid=true;
+        sessionStorage.setItem('vb_paid','1');
+        sessionStorage.removeItem('vb_pending_amt'); sessionStorage.removeItem('vb_pending_cur');
+        const cleanUrl=new URL(window.location.href); cleanUrl.searchParams.delete('paid');
+        window.history.replaceState({}, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
+      }
+    }catch(e){}
+
     let paid=false; try{ paid = sessionStorage.getItem('vb_paid')==='1'; }catch(e){}
-    if(paid){ this.enterBoard(); }
+    if(justPaid){ this.goHome(); this.showWelcome(); }
+    else if(paid){ this.enterBoard(); }
     else if(this.startView==='home') this.goHome();
     else { this.enterBoard(); if(this.startView!=='pi') this.switchView(this.startView); }
 
     let searched=false; try{ searched = sessionStorage.getItem('vb_searched')==='1'; }catch(e){}
     if(!paid && searched){
       try{
-        const cur=sessionStorage.getItem('vb_searched_cur'); if(cur) this.setCurrency(cur);
         const d=sessionStorage.getItem('vb_searched_digits'); const a=sessionStorage.getItem('vb_searched_amt');
         if(d && a){ this.$('vb-amount').value=a; this.revealNumber(d, a, false); }
       }catch(e){}
@@ -613,33 +620,21 @@ class Component extends DCLogic {
     this.$('vb-amount').value = (Math.random()*(99.99-3.14) + 3.14).toFixed(2);
     this.goHome();
   };
-  renderPaypalButton = (amtStr) => {
+  STRIPE_PAY_LINK = 'https://buy.stripe.com/7sY9AT1fa4UlbFQdBh9MY00';
+  renderStripeButton = (amtStr) => {
     const box=this.$('vb-paypal-container'); if(!box) return;
-    const run=()=>{
-      box.innerHTML='';
-      if(!window.paypal){ box.innerHTML='<div style="font-size:11px;color:#B5453A;">Payment is temporarily unavailable. Please refresh and try again.</div>'; return; }
-      window.paypal.Buttons({
-        style:{ layout:'horizontal', color:'gold', shape:'rect', label:'pay', height:48 },
-        createOrder:(data,actions)=>actions.order.create({
-          purchase_units:[{ amount:{ value:amtStr, currency_code:this.currency } }]
-        }),
-        onApprove:async(data,actions)=>{
-          await actions.order.capture();
-          try{ sessionStorage.setItem('vb_paid','1'); }catch(e){}
-          this.showWelcome();
-        },
-        onError:(err)=>{
-          console.error('PayPal error', err);
-          box.innerHTML='<div style="font-size:11px;color:#B5453A;">Something went wrong with the payment. Please try again.</div>';
-        }
-      }).render(box);
-    };
-    const sdk=this.$('vb-paypal-sdk');
-    const wantSrc=`https://www.paypal.com/sdk/js?client-id=AYFQzGE7vgz69aFyLahejG1ORH2bsG4QnTWxXQg44WvM1brmziABzuQ3SoDHEQ6R05UIYSdFeO9BWW-y&currency=${this.currency}&intent=capture`;
-    if(window.paypal && sdk.dataset.cur===this.currency){ run(); return; }
-    const next=document.createElement('script'); next.id='vb-paypal-sdk'; next.src=wantSrc; next.dataset.cur=this.currency;
-    next.onload=run;
-    sdk.replaceWith(next);
+    box.innerHTML='';
+    try{ sessionStorage.setItem('vb_pending_amt', amtStr); sessionStorage.setItem('vb_pending_cur', this.currency); }catch(e){}
+    const a=document.createElement('a');
+    a.id='vb-stripe-link'; a.href=this.STRIPE_PAY_LINK; a.textContent='Continue to give \u2192';
+    a.style.cssText='display:inline-block;background:#C9A96E;color:#1C1C1C;border:none;cursor:pointer;font-family:inherit;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;padding:16px 38px;font-weight:500;text-decoration:none;transition:background 0.15s;';
+    a.addEventListener('mouseenter',()=>{ a.style.background='#BE9C63'; });
+    a.addEventListener('mouseleave',()=>{ a.style.background='#C9A96E'; });
+    box.appendChild(a);
+    const note=document.createElement('div');
+    note.style.cssText='margin-top:12px;font-size:9.5px;letter-spacing:0.5px;color:#8E8478;line-height:1.5;';
+    note.textContent="You'll confirm your amount on Stripe's secure page, then return here automatically.";
+    box.appendChild(note);
   };
   showWelcome = () => {
     const ov=this.$('vb-welcome'), proc=this.$('vb-welcome-proc'), done=this.$('vb-welcome-done'), pulse=this.$('vb-welcome-pulse');
@@ -883,7 +878,6 @@ class Component extends DCLogic {
     [...document.querySelectorAll('.vb-cta-begin')].forEach(b=>b.addEventListener('click',()=>this.scrollToOffering()));
     this.$('vb-enter-link').addEventListener('click',()=>{ if(this.screen==='home') this.scrollToOffering(); });
     this.$('vb-logo').addEventListener('click',()=>{ if(this.screen==='home') this.goHome(); });
-    this.$('vb-cur-select').addEventListener('change',(e)=>this.setCurrency(e.target.value));
     this.$('vb-find').addEventListener('click',this.findNumber);
     this.$('vb-amount').addEventListener('keydown',(e)=>{ if(e.key==='Enter') this.findNumber(); });
     this.$('vb-welcome-enter').addEventListener('click',()=>{ this.$('vb-welcome').style.display='none'; this.enterBoard(); });
@@ -901,7 +895,6 @@ class Component extends DCLogic {
     this.$('vb-contact-form').addEventListener('submit',(e)=>{ e.preventDefault(); const f=e.target; const sent=this.$('vb-contact-sent'); fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(()=>{ sent.style.display='inline'; f.reset(); }).catch(()=>{ sent.style.display='inline'; f.reset(); }); });
   };
   scrollToOffering=()=>{ const home=this.$('vb-home'), t=this.$('vb-offering'); home.scrollTo({top:t.offsetTop-40,behavior:'smooth'}); };
-  setCurrency=(c)=>{ this.currency=c; this.$('vb-cur-sym').textContent=c==='USD'?'$':'\u20ac'; const s=this.$('vb-cur-select'); if(s&&s.value!==c) s.value=c; };
 
   generatePiDecimals=(count)=>{
     if(this.piCache && this.piCache.length>=count) return this.piCache;
@@ -938,7 +931,7 @@ class Component extends DCLogic {
       lEl.innerHTML=`Your number is so rare it slips beyond the first hundred thousand digits &mdash; held somewhere deeper in \u03c0&rsquo;s endless expansion.`;
     }
     this.$('vb-pay-label').textContent=`Give ${sym}${amtStr} & enter`;
-    this.renderPaypalButton(amtStr);
+    this.renderStripeButton(amtStr);
     reveal.style.display='block'; reveal.classList.remove('vb-reveal-on'); void reveal.offsetWidth; reveal.classList.add('vb-reveal-on');
     this.lockChosen();
     if(persist){
@@ -951,7 +944,6 @@ class Component extends DCLogic {
     const find=this.$('vb-find'); find.disabled=true; find.textContent='Your number is chosen';
     find.style.background='transparent'; find.style.color=this.hexA(this.accent,0.9); find.style.border='0.5px solid '+this.hexA(this.accent,0.55); find.style.cursor='not-allowed';
     const inp=this.$('vb-amount'); inp.readOnly=true; inp.style.color='#9A8F82'; inp.style.cursor='default';
-    const cs=this.$('vb-cur-select'); if(cs){ cs.disabled=true; cs.style.opacity='0.5'; cs.style.cursor='not-allowed'; }
   };
   unlockChosen=()=>{
     this.numberChosen=false;
@@ -959,7 +951,6 @@ class Component extends DCLogic {
     const find=this.$('vb-find'); find.disabled=false; find.textContent='Enter my number';
     find.style.background='#1C1C1C'; find.style.color='#F8F5F0'; find.style.border='none'; find.style.cursor='pointer';
     const inp=this.$('vb-amount'); inp.readOnly=false; inp.style.color='#1C1C1C'; inp.style.cursor='text';
-    const cs=this.$('vb-cur-select'); if(cs){ cs.disabled=false; cs.style.opacity='1'; cs.style.cursor='pointer'; }
     const reveal=this.$('vb-reveal'); if(reveal){ reveal.style.display='none'; reveal.classList.remove('vb-reveal-on'); }
     const pp=this.$('vb-paypal-container'); if(pp) pp.innerHTML='';
   };
