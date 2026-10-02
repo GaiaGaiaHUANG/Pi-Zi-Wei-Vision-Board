@@ -1,0 +1,6 @@
+name = "pi-ziwei-pay"
+main = "worker.js"
+compatibility_date = "2026-10-02"
+workers_dev = true
+
+# STRIPE_SECRET_KEY is a secret — set it with `npx wrangler secret put STRIPE_SECRET_KEY`, never here.

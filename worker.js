@@ -5,7 +5,7 @@
 
 const SITE = 'https://pi-ziwei.com';
 const ALLOWED_CURRENCIES = ['usd', 'eur', 'sgd'];
-const MIN = 0.5, MAX = 99.99;
+const MIN = 3.14, MAX = 999.99;
 
 export default {
   async fetch(request, env) {
@@ -39,8 +39,11 @@ export default {
       },
       body,
     });
-    const session = await res.json();
+    const text = await res.text();
+    let session = {};
+    try { session = JSON.parse(text); } catch {}
     if (!res.ok || !session.url) {
+      console.error('Stripe checkout failed', res.status,session.error ? session.error.type + ': ' + session.error.message : 'non-JSON response: ' + text.slice(0, 200));
       return new Response('Could not start checkout. Please go back and try again.', { status: 502 });
     }
     return Response.redirect(session.url, 303);

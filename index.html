@@ -236,11 +236,11 @@
           <div style="display:flex;align-items:flex-end;gap:12px;">
             <div style="display:flex;align-items:flex-end;gap:6px;border-bottom:1.5px solid #C9A96E;padding:0 4px 8px;">
               <span id="vb-cur-sym" style="font-family:'Cormorant Garamond',serif;font-size:38px;color:#C9A96E;line-height:1;">$</span>
-              <input id="vb-amount" type="number" min="3.14" max="99.99" step="0.01" inputmode="decimal" placeholder="3.14" style="width:190px;border:none;outline:none;background:transparent;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:52px;color:#1C1C1C;text-align:center;line-height:1;"/>
+              <input id="vb-amount" type="number" min="3.14" max="999.99" step="0.01" inputmode="decimal" placeholder="3.14" style="width:190px;border:none;outline:none;background:transparent;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:52px;color:#1C1C1C;text-align:center;line-height:1;"/>
             </div>
           </div>
           <button id="vb-find" style="background:#1C1C1C;color:#F8F5F0;border:none;cursor:pointer;font-family:inherit;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:14px 30px;">Enter my number</button>
-          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:#6E635A;line-height:1.5;">A gift is held up to 99.99.</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:#6E635A;line-height:1.5;">A gift is held up to 999.99.</div>
         </div>
 
         <div id="vb-reveal" style="display:none;margin-top:46px;">
@@ -622,7 +622,7 @@ class Component extends DCLogic {
     this.goHome();
   };
   STRIPE_PAY_LINK = 'https://buy.stripe.com/7sY9AT1fa4UlbFQdBh9MY00';
-  PAY_WORKER_URL = '';
+  PAY_WORKER_URL = 'https://pi-ziwei-pay.i--i--ei--ision--oard.workers.dev';
   payHref = (amtStr) => this.PAY_WORKER_URL ? `${this.PAY_WORKER_URL.replace(/\/$/,'')}/checkout?amount=${encodeURIComponent(amtStr)}&currency=${(this.currency||'USD').toLowerCase()}` : this.STRIPE_PAY_LINK;
   renderStripeButton = (amtStr) => {
     const box=this.$('vb-paypal-container'); if(!box) return;
@@ -925,13 +925,19 @@ class Component extends DCLogic {
   findNumber=()=>{
     if(this.numberChosen) return;
     const raw=this.$('vb-amount').value; const amt=parseFloat(raw);
-    if(!raw || isNaN(amt) || amt<3.14 || amt>99.99){ this.$('vb-amount').focus(); const inp=this.$('vb-amount'); inp.style.transition='color .15s'; inp.style.color='#B5453A'; setTimeout(()=>inp.style.color='#1C1C1C',500); return; }
+    if(!raw || isNaN(amt) || amt<3.14 || amt>999.99){ this.$('vb-amount').focus(); const inp=this.$('vb-amount'); inp.style.transition='color .15s'; inp.style.color='#B5453A'; setTimeout(()=>inp.style.color='#1C1C1C',500); return; }
     const digits=String(raw).replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'')||'0';
     const find=this.$('vb-find'); find.textContent='Entering \u03c0\u2026'; find.disabled=true;
     setTimeout(()=>{ this.revealNumber(digits, amt.toFixed(2), true); },160);
   };
   revealNumber=(digits, amtStr, persist)=>{
-    const pi = window.PI_DECIMALS || this.generatePiDecimals(3000);
+    const pi = this.piDeep || window.PI_DECIMALS || this.generatePiDecimals(3000);
+    // Most numbers sit in the first 100,000 decimals; the rest are always within 1.4 million, loaded only when needed.
+    if(pi.indexOf(digits)<0 && !this.piDeep && !this.piDeepFailed){
+      const find=this.$('vb-find'); find.textContent='Going deeper into π…'; find.disabled=true;
+      fetch('./pi-digits-1.4m.txt').then(r=>r.ok?r.text():Promise.reject()).then(t=>{ this.piDeep=t.trim(); }).catch(()=>{ this.piDeepFailed=true; }).finally(()=>this.revealNumber(digits, amtStr, persist));
+      return;
+    }
     const idx=pi.indexOf(digits);
     const reveal=this.$('vb-reveal'); const dEl=this.$('vb-reveal-digits'); const lEl=this.$('vb-reveal-line');
     const sym=this.currency==='USD'?'$':'\u20ac';
@@ -941,7 +947,7 @@ class Component extends DCLogic {
       lEl.innerHTML=`Your number lives at position <span style="color:${this.accent};">${pos.toLocaleString()}</span> of \u03c0.<br/>Be certain, everything is already in there.`;
     } else {
       dEl.innerHTML=`<span style="color:#C8BFAE;">3.${this.esc(pi.slice(0,52))}\u2026</span>`;
-      lEl.innerHTML=`Your number is so rare it slips beyond the first hundred thousand digits &mdash; held somewhere deeper in \u03c0&rsquo;s endless expansion.`;
+      lEl.innerHTML=`Your number is so rare it slips beyond the digits we could reach just now &mdash; held somewhere deeper in \u03c0&rsquo;s endless expansion.`;
     }
     this.$('vb-pay-label').textContent=`Give ${sym}${amtStr} & enter`;
     this.renderStripeButton(amtStr);
